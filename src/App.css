@@ -1,10 +1,7 @@
+
 .App {
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+  
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -12,27 +9,184 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
+@font-face {
+  font-family: bader;
+  src: url('./fonts/bader_al\ merkaz_0.ttf');
+  font-family:frutiger-bold ;
+  src: url('./fonts/FrutigerLTArabic-65Bold.ttf');
+  font-family: frutiger-black;
+  src: url('./fonts/FrutigerLTArabic-75Black.ttf');
+  font-family: hisham;
+  src: url('./fonts/HishamLTRegular.ttf');
+}
 
-.App-header {
-  background-color: #282c34;
+.Container {
+  background-color: #342802;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  font-family: hisham;
 }
 
-.App-link {
-  color: #61dafb;
+/* signup page*/
+.logo {
+  margin-top: 20%;
+  margin-bottom: 20%;
+}
+.txt1 {
+  font-family: hisham;
+}
+.txt2 {
+  opacity:0.3 ;
+  margin-bottom: 50px;
+}
+.inputBox {
+  height:6vh;
+  width:35vh;
+  background-color: #FFFCF1;
+  border-radius:8px;
+  margin-bottom: 40px;
+  padding:3px;
+  
+}
+.submit-btn {
+  border: none;
+  display: block;
+}
+/* Rewards1 page*/
+ .reward-img {
+  margin-top: 15vh;
+  margin-bottom: 10vh;
+ }
+.coin-img {
+  margin-top: 25px;
+}
+/* Rewards2 */
+.points {
+  position: absolute;
+  right: 2%;
+  background-color: #FFFCF1;
+  border-radius: 15px;
+  color: #483307;
+  width: 19vh;
+  height: 6vh;
+ 
+}
+.wallet {
+  position: absolute;
+  margin-top: 85px;
+  left: 7%;
+}
+.redeem {
+  position: absolute;
+  margin-top: 85px;
+  right: 7%;
+}
+.copoun1 {
+  position: relative;
+  display: flex;
+  height: 170px;
+  background-color:rgb(255, 232, 209) ; 
+  border-radius:20px;
+  margin-top: 150px;
+  width: 90%;
+  color: #342802;
+  align-items: center;
+}
+.copun1-img {
+  display: flex;
+  width: 18vh;
+  
+}
+.coupon-txt {
+  align-self: center;
+}
+.copoun2 {
+  position: relative;
+  display: flex;
+  height: 170px;
+  background-color:rgb(255, 232, 209) ; 
+  border-radius:20px;
+  margin-top: 55px;
+  width: 90%;
+  color: #342802;
+  align-items: center;
+}
+/*Rewards3 page */
+.hover-txt {
+  position: relative;
+  display: flex;
+  color:#FFFCF1;
+   opacity:0.8;
+   margin-top: 160px;
+
+}
+.redeem1 {
+  position: relative;
+  display: flex;
+  height: 70px;
+  background-color:#ffe8d1 ; 
+  border-radius:20px;
+  margin-top: 10px;
+  width: 90%;
+  color: #342802;
+  align-items: center;
+  justify-content: space-between;
+
+}
+.hover-txt2 {
+   opacity:0.8;
+  
+}
+.redeem2 {
+  position: relative;
+  display: flex;
+  height: 70px;
+  background-color:#ffe8d1 ; 
+  border-radius:20px;
+  width: 90%;
+  color: #342802;
+  align-items: center;
+  justify-content: space-between;
+  top: -20px;
+}
+/* Settings page */
+.avatar {
+  margin-top: 30px;
+}
+.settings-main {
+  margin-top: 20px;
+}
+.section {
+  background-color: #FFFCF1;
+  border-radius: 20px;
+  color: #342802;
+  margin-bottom: 5px;
+  width: 40vh;
+  padding: 3px;
+  justify-content: space-between;
+}
+.section-phone {
+  background-color: #FFFCF1;
+  border-radius: 20px;
+  color: #342802;
+  margin-bottom: 5px;
+  width: 40vh;
+  padding: 3px;
+  
+}
+.phone-num {
+  margin-left: 20px;
+  margin-right: 5px;
+}
+/* Change */
+.change-main {
+  margin-top: 30vh;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+
+
+
