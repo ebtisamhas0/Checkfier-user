@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 var cors = require("cors");
 const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
-const port = process.env.PORT || 3000
+const port =  3000
 
 
 const mongURL = "mongodb+srv://admin:bK9oZDsnBMNuGf91@checkfier.bywera9.mongodb.net/?retryWrites=true&w=majority"
