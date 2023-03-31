@@ -24,13 +24,15 @@ export function Signup() {
   setError(null);
 
   try {
-    const response = await Axios.post('http://localhost:3000/register', { phone }, {
+    const response = await fetch('http://localhost:3000/register', {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json'
-      }
+      },
+      body: JSON.stringify({ phone })
     });
 
-    const data = response.data;
+    const data = await response.json();
     if (!response.ok) {
       setError(data.error);
     } else {
@@ -43,8 +45,6 @@ export function Signup() {
     setError('An error occurred. Please try again later.');
   }
 };
-
-
 
 
   
@@ -74,7 +74,7 @@ export function Signup() {
     </div>
     </div>
   )
-      }
 
 
-  
+
+  }
