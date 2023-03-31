@@ -44,7 +44,7 @@ export function Signup() {
   }
 };
 
-};
+
 
 
   
@@ -74,7 +74,7 @@ export function Signup() {
     </div>
     </div>
   )
-
+      }
 
 
   
