@@ -4,6 +4,10 @@ export  function About() {
     const navigate = useNavigate()
     return(
         <div className="Container">
+           <div className="about-main">
+           <img className='logo' src={require('../images/logo.png')} style={{width:150, height:150}}/>
 
+            <h3 className="about-txt"> Golden Brown is a reward system web-app where you can easily sign up through phone number and easily track your point, rewards and redeems.</h3>
+            </div>  
         </div>
     )}

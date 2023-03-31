@@ -1,9 +1,13 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import '../App.css'
 export  function Help() {
-    const navigate = useNavigate()
     return(
         <div className="Container">
-
+            <div className="help-main">
+            <h2>Common Questions:</h2>
+            <hr/>
+            <h4>How do I get points?</h4>
+            <hr style={{width:'100%'}}/>
+            </div>
         </div>
     )}

@@ -33,8 +33,8 @@
 
 /* signup page*/
 .logo {
-  margin-top: 20%;
-  margin-bottom: 20%;
+  margin-top: 20vh;
+  margin-bottom: 15vh;
 }
 .txt1 {
   font-family: hisham;
@@ -185,6 +185,11 @@
 /* Change */
 .change-main {
   margin-top: 30vh;
+}
+/* About */
+.about-txt{
+ margin-right: 5vh;
+ margin-left: 5vh;
 }
 
 

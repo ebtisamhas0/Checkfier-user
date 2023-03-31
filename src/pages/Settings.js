@@ -35,11 +35,7 @@ export  function Settings() {
             <img className='avatar' src={require('../images/user.png')}height='128vh'></img>
             <hr style={{width:'90%'}} />
           <div className='settings-main'> 
-            <div className='section d-flex'>
-                <AiOutlineUser/>
-                <h4 >Help centre</h4>
-                <AiOutlineRight onClick={handleHelpNavigate} /> 
-            </div>
+           
 
             <div className='section d-flex'>
                 <AiOutlineInfoCircle/>
