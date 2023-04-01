@@ -44,20 +44,39 @@ mongoose.connect(mongURL,{
     const { phone } = req.body;
   
     // Check if user already exists
-    const existingUser = await User.findOne({ phone });
+    const existingUser = await User.findOne({phone});
+    console.log(existingUser);
     if (existingUser) {
       return res.status(400).json({ error: 'User already exists' });
     }
   
-    // Hash phone number and create new user
-    const hashedPhone = await bcrypt.hash(phone, 10);
-    const user = new User({ phone: hashedPhone });
+    // Create new user
+    const user = new User({phone});
     await user.save();
   
     return res.json(user);
   });
   
+  // Login api
+  app.post('/login', async (req, res) => {
+    const {phone} = req.body;
+  
+    // Authenticate user
+    const user = await User.findOne({phone});
+    console.log(user)
 
+    if (!user) {
+      return res.status(401).json({ error: 'User not found' });
+    }
+    // Update user's points
+    user.points += 5;
+    await user.save();
+  
+    // Return user info and points
+    return res.json({ phone: user.phone, points: user.points });
+  });
+  
+  
 
 
 app.get('/', cors(),(req,res)=>{
@@ -69,16 +88,7 @@ app.get('/', cors(),(req,res)=>{
         console.log(err)
     })
 })
-    app.get('/show-number', cors(),(req,res)=>{
-        User.findOne({_id:req.body.id})
-        .then(data =>{
-            console.log(data)
-            res.send(data)
-        }).catch(err => {
-            console.log(err)
-        })
-}
-)
+ 
 app.listen(port,()=>{
     console.log(`Listening on ${port} `)
 })

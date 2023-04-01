@@ -6,7 +6,6 @@ export function Rewards2() {
     const navigate = useNavigate()
     const handleOnNavigate = () => navigate("/Rewards3")
 
-
 return(
     <div className='Container'>
      <div className='slideShow'>
@@ -30,6 +29,7 @@ return(
     <div className='main-content '>
         <div className='points d-flex mt-3 p-2'>
             <img src={require("../images/coin.png")}height='20vh'></img>
+          
             <h5 >250 point</h5>
         </div>
 

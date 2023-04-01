@@ -13,6 +13,7 @@ import {About} from "./pages/About"
 import {Change} from "./pages/Change"
 import {Settings} from "./pages/Settings"
 import { Navigationbar } from './components/Navigationbar';
+import { Login } from './pages/Login';
 
 function App() {
   return (
@@ -28,6 +29,8 @@ function App() {
           <Route path='/Change' Component={Change}/>
           <Route path='/About' Component={About}/>
           <Route path='/Settings' Component={Settings}/>
+          <Route path='/Login' Component={Login}/>
+
 
 
         </Routes>

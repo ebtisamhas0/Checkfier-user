@@ -1,20 +1,17 @@
 import React, {useState} from 'react'
-import Axios from 'axios';
 import '../App.css'
 import {BsFillArrowRightCircleFill } from "react-icons/bs";
 import { useNavigate } from 'react-router-dom';
-import ClipLoader from 'react-spinners/ClipLoader';
 
 export function Signup() {
   const [phone, setPhone] = useState('');
   const [error, setError] = useState(null);
 
 
-  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate()
-
-   
    const handleOnNavigate = () => navigate("/Rewards1")
+   const handleOnLogin = () => navigate("/Login")
+
    
 
  //submit data
@@ -55,7 +52,7 @@ export function Signup() {
       <h3 className='txt1'>Welcome To Golden Brown CheckIn </h3>
       <h5 className='txt2'>Type your number to become our guest!</h5>
        <form onSubmit={handleSubmit}>
-      {error && <p>{error}</p>}
+      {error && alert(error)}
       <input className='inputBox' type={'text'}
        placeholder='05' minLength={10} maxLength={10} required={true} 
        value={phone}
@@ -63,11 +60,13 @@ export function Signup() {
          setPhone(event.target.value);
        }} 
       />
+      <h5 style={{opacity:0.5}} onClick={handleOnLogin}>already have an account?</h5>
       <div>
       <button type='submit' style={{backgroundColor: 'rgba(0,0,0,0.0)', border: 'none',color: '#FFFCF1'}}>
       <BsFillArrowRightCircleFill size={30} >
       </BsFillArrowRightCircleFill>
       </button>
+      
       </div>
       </form>
 
