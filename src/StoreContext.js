@@ -10,7 +10,7 @@ const StoreProvider = ({ children }) => {
   const [store, setStore] = useState({ logo: '', name: '', color: '' });
 
   useEffect(() => {
-    fetch('http://localhost:3000/store')
+    fetch('https://darling-choux-52256c.netlify.app/store')
       .then(response => response.json())
       .then(data => {
         console.log(data);
