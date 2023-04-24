@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useStore } from '../StoreContext';
 import { 
     AiOutlineUser, 
     AiOutlineRight,
@@ -10,6 +11,8 @@ import '../App.css'
 
 export  function Settings() {
     const navigate = useNavigate()
+    const { store } = useStore();
+
     const handleAboutNavigate = () => navigate("/About")
     const handleHelpNavigate = () => navigate("/Help")
     const handleChangeNavigate = () => navigate("/Change")
@@ -31,7 +34,7 @@ export  function Settings() {
 
     return(
 
-        <div className="Container">
+        <div className="Container" style={{backgroundColor:store.color}}>
             <img className='avatar' src={require('../images/user.png')}height='128vh'></img>
             <hr style={{width:'90%'}} />
           <div className='settings-main'> 

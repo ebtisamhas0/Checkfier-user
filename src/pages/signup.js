@@ -2,10 +2,11 @@ import React, {useState} from 'react'
 import '../App.css'
 import {BsFillArrowRightCircleFill } from "react-icons/bs";
 import { useNavigate } from 'react-router-dom';
-
+import {useStore} from '../StoreContext'
 export function Signup() {
   const [phone, setPhone] = useState('');
   const [error, setError] = useState(null);
+  const { store } = useStore();
 
 
   const navigate = useNavigate()
@@ -21,7 +22,7 @@ export function Signup() {
   setError(null);
 
   try {
-    const response = await fetch('/register', {
+    const response = await fetch('http://localhost:3000/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -39,14 +40,14 @@ export function Signup() {
     }
   } catch (error) {
     console.error(error);
-    setError('An error occurred. Please try again later.');
+    setError('An error occurred. Please try again later.'+error);
   }
 };
 
 
   
   return (
-    <div className="Container">
+    <div className="Container" style={{backgroundColor:store.color}}>
     <div >
       <img className='logo' src={require('../images/logo.png')} style={{width:150, height:150}}/>
       <h3 className='txt1'>Welcome To Golden Brown CheckIn </h3>

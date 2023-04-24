@@ -4,6 +4,8 @@ const bodyParser = require('body-parser');
 var cors = require("cors");
 const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
+const path = require('path');
+
 const port = process.env.PORT || 3000
 
 
@@ -11,7 +13,9 @@ const mongURL = "mongodb+srv://admin:bK9oZDsnBMNuGf91@checkfier.bywera9.mongodb.
 
 
 require('./User')
+require('./Store')
 const User = mongoose.model("user")
+const Store = mongoose.model("store")
 app.use(bodyParser.json())
 app.use(express.json());
 app.use(cors());
@@ -76,7 +80,29 @@ mongoose.connect(mongURL,{
     return res.json({ phone: user.phone, points: user.points });
   });
   
+  // Define a route for the store model
+  app.get('/store',cors(), (req, res) => {
+    // Fetch last data from the database
+    Store.findOne().sort({ _id: -1 }).exec()
+      .then((store) => {
+        if (!store) {
+          res.status(404).send('No data found');
+        } else {
+          // Return the data as JSON
+          const data = { logo: store.logo, name: store.name, color: store.color };
+          res.json(data);
+          console.log(data);
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching store data:', error);
+        res.status(500).send('Internal server error', error);
+      });
+  });
   
+  
+
+
 
 
 app.get('/', cors(),(req,res)=>{

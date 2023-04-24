@@ -2,11 +2,12 @@ import React,{useState} from "react";
 import { useNavigate } from "react-router-dom";
 import {BsFillArrowRightCircleFill } from "react-icons/bs";
 import axios from "axios";
-
+import { useStore } from "../StoreContext";
 
 export  function Change() {
     const [phone, setPhone] = useState('');
     const navigate = useNavigate()
+    const { store } = useStore();
 
     const handleSubmit = (e) => {
          e.preventDefault();
@@ -24,7 +25,7 @@ export  function Change() {
 
 
     return(
-        <div className="Container">
+        <div className="Container" style={{backgroundColor:store.color}}>
             <div className="change-main">
             <h3 >Enter Your New Number</h3>
              <form onSubmit={handleSubmit}>

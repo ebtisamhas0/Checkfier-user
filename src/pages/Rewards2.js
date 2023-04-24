@@ -2,12 +2,14 @@ import React from 'react'
 import '../App.css'
 import { useNavigate } from 'react-router-dom';
 import Carousel from 'react-bootstrap/Carousel';
+import { useStore } from '../StoreContext';
 export function Rewards2() {
     const navigate = useNavigate()
     const handleOnNavigate = () => navigate("/Rewards3")
+    const { store } = useStore();
 
 return(
-    <div className='Container'>
+    <div className='Container' style={{backgroundColor:store.color}}>
      <div className='slideShow'>
     <Carousel>
       <Carousel.Item>

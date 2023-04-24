@@ -1,9 +1,12 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useStore } from "../StoreContext";
 export  function About() {
     const navigate = useNavigate()
+    const { store } = useStore();
+
     return(
-        <div className="Container">
+        <div className="Container" style={{backgroundColor:store.color}}>
            <div className="about-main">
            <img className='logo' src={require('../images/logo.png')} style={{width:150, height:150}}/>
 

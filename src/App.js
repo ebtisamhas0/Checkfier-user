@@ -3,6 +3,7 @@ import './App.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 // Bootstrap Bundle JS
 import "bootstrap/dist/js/bootstrap.bundle.min";
+import StoreProvider from './StoreContext';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import {Signup} from "./pages/signup"
 import {Rewards1} from "./pages/Rewards1"
@@ -17,6 +18,7 @@ import { Login } from './pages/Login';
 
 function App() {
   return (
+    <StoreProvider> 
     <div className="App">
       <Router>
          <Navigationbar/>
@@ -36,6 +38,7 @@ function App() {
         </Routes>
       </Router>
     </div>
+    </StoreProvider>
   );
 }
 
