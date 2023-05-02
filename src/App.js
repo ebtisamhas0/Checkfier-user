@@ -3,7 +3,8 @@ import './App.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 // Bootstrap Bundle JS
 import "bootstrap/dist/js/bootstrap.bundle.min";
-import StoreProvider from './StoreContext';
+import StoreProvider from './components/StoreContext';
+import {UserProvider} from './components/UserContext';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import {Signup} from "./pages/signup"
 import {Rewards1} from "./pages/Rewards1"
@@ -19,9 +20,11 @@ import { Login } from './pages/Login';
 function App() {
   return (
     <StoreProvider> 
+    <UserProvider>
     <div className="App">
       <Router>
          <Navigationbar/>
+        
         <Routes>
           <Route path='/' Component={Signup}/>
           <Route path='/Rewards1' Component={Rewards1}/>
@@ -38,7 +41,9 @@ function App() {
         </Routes>
       </Router>
     </div>
+    </UserProvider>
     </StoreProvider>
+
   );
 }
 

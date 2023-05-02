@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useStore } from '../StoreContext';
+import { useStore } from '../components/StoreContext';
 import { BsFillArrowRightCircleFill } from 'react-icons/bs';
 import '../App.css';
+import { UserContext } from '../components/UserContext';
 
 export function Login() {
   const [phone, setPhone] = useState('');
@@ -12,18 +13,20 @@ export function Login() {
   
   const handleOnNavigate = () => navigate('/Rewards1');
   const handleSignup = () => navigate("/")
-
+  const { login } = useContext(UserContext);
+   
   const handleLogin = async (event) => {
     event.preventDefault();
     setError(null);
     try {
-      const response = await fetch('https://darling-choux-52256c.netlify.app/login', {
+      const response = await fetch('http://localhost:3000/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ phone }),
       });
       const { phone: userPhone, points } = await response.json();
       alert(`Logged in successfully as ${userPhone}, your points is: ${points}`);
+      login(userPhone, points);
       handleOnNavigate();
     } catch (error) {
       console.error(error);

@@ -2,7 +2,7 @@ import React,{useState} from "react";
 import { useNavigate } from "react-router-dom";
 import {BsFillArrowRightCircleFill } from "react-icons/bs";
 import axios from "axios";
-import { useStore } from "../StoreContext";
+import { useStore } from "../components/StoreContext";
 
 export  function Change() {
     const [phone, setPhone] = useState('');

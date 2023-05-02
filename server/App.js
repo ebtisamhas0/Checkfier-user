@@ -2,10 +2,9 @@ const express = require('express');
 const app =  express();
 const bodyParser = require('body-parser');
 var cors = require("cors");
-const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
 const path = require('path');
-
+const fs = require('fs');
 const port = process.env.PORT || 3000
 
 
@@ -14,8 +13,10 @@ const mongURL = "mongodb+srv://admin:bK9oZDsnBMNuGf91@checkfier.bywera9.mongodb.
 
 require('./User')
 require('./Store')
+require('./Adds')
 const User = mongoose.model("user")
 const Store = mongoose.model("store")
+const Ad = mongoose.model("ad")
 app.use(bodyParser.json())
 app.use(express.json());
 app.use(cors());
@@ -81,17 +82,18 @@ mongoose.connect(mongURL,{
   });
   
   // Define a route for the store model
-  app.get('/store',cors(), (req, res) => {
+  app.get('/store', cors(), (req, res) => {
     // Fetch last data from the database
     Store.findOne().sort({ _id: -1 }).exec()
       .then((store) => {
         if (!store) {
           res.status(404).send('No data found');
         } else {
-          // Return the data as JSON
-          const data = { logo: store.logo, name: store.name, color: store.color };
+          const logoData = store.logo;
+          const base64Data = Buffer.from(logoData, 'base64').toString('base64');
+          // Return the data as JSON with the logo image data as a base64-encoded string
+          const data = { logo: base64Data, name: store.name, color: store.color };
           res.json(data);
-          console.log(data);
         }
       })
       .catch((error) => {
@@ -99,6 +101,30 @@ mongoose.connect(mongURL,{
         res.status(500).send('Internal server error', error);
       });
   });
+
+// Get advertisement data
+app.get('/ad', cors(),function(req, res) {
+  Ad.findOne().sort({ _id: -1 }).exec()
+    .then(ad => {
+      if (!ad) {
+        res.sendStatus(404);
+      } else {
+        const adData = {
+          link: ad.link,
+          image: ad.image.toString('base64') // encode image data as base64
+        };
+        res.json(adData);
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+});
+
+  
+  
+  
   
   
 

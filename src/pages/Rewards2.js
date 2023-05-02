@@ -1,13 +1,15 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import '../App.css'
 import { useNavigate } from 'react-router-dom';
 import Carousel from 'react-bootstrap/Carousel';
-import { useStore } from '../StoreContext';
+import { useStore } from '../components/StoreContext';
+import { UserContext } from '../components/UserContext';
+
 export function Rewards2() {
     const navigate = useNavigate()
     const handleOnNavigate = () => navigate("/Rewards3")
     const { store } = useStore();
-
+    const {points} = useContext(UserContext);
 return(
     <div className='Container' style={{backgroundColor:store.color}}>
      <div className='slideShow'>
@@ -32,7 +34,7 @@ return(
         <div className='points d-flex mt-3 p-2'>
             <img src={require("../images/coin.png")}height='20vh'></img>
           
-            <h5 >250 point</h5>
+            <h5 style={{marginLeft: 3}} >{points} point</h5>
         </div>
 
         <div className='wallet'>

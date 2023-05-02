@@ -1,6 +1,6 @@
 import React from "react";
 import '../App.css'
-import { useStore } from "../StoreContext";
+import { useStore } from "../components/StoreContext";
 export  function Help() {
     const { store } = useStore();
 

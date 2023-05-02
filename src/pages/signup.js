@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import '../App.css'
 import {BsFillArrowRightCircleFill } from "react-icons/bs";
 import { useNavigate } from 'react-router-dom';
-import {useStore} from '../StoreContext'
+import {useStore} from '../components/StoreContext'
 export function Signup() {
   const [phone, setPhone] = useState('');
   const [error, setError] = useState(null);
@@ -49,7 +49,7 @@ export function Signup() {
   return (
     <div className="Container" style={{backgroundColor:store.color}}>
     <div >
-      <img className='logo' src={require('../images/logo.png')} style={{width:150, height:150}}/>
+      <img className='logo' src={store.logo} style={{width:150, height:150}}/>
       <h3 className='txt1'>Welcome To Golden Brown CheckIn </h3>
       <h5 className='txt2'>Type your number to become our guest!</h5>
        <form onSubmit={handleSubmit}>
