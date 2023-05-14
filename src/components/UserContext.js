@@ -14,6 +14,8 @@ export const UserProvider = ({ children }) => {
     const userContextValue = {
     userPhone,
     points,
+    setPoints,
+    setUserPhone,
     login,
   };
 

@@ -27,12 +27,18 @@ export function Login() {
       const { phone: userPhone, points } = await response.json();
       alert(`Logged in successfully as ${userPhone}, your points is: ${points}`);
       login(userPhone, points);
+      // Set cookie with user's phone number and points
+      const expirationTime = new Date(Date.now() + 2 * 60 * 60 * 1000); // current time + 2 hours in milliseconds
+      document.cookie = `phone=${userPhone}; points=${points}; expires=${expirationTime.toUTCString()}`;
       handleOnNavigate();
     } catch (error) {
       console.error(error);
       setError('An error occurred. Please try again later.' + error);
     }
   };
+  
+  
+  
 
   if (!store.logo || !store.name) {
     return <p>Loading...</p>;
@@ -58,7 +64,7 @@ export function Login() {
               setPhone(event.target.value);
             }}
           />
-          <h5 style={{ opacity: 0.5 }} onClick={handleSignup}>Don't hava an account? signup</h5>
+          <h5 style={{ opacity: 0.5 }} onClick={handleSignup}>Don't have an account? signup</h5>
           <div>
             <button type='submit' style={{ backgroundColor: 'rgba(0,0,0,0.0)', border: 'none', color: '#FFFCF1' }}>
               <BsFillArrowRightCircleFill size={30} />

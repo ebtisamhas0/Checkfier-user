@@ -21,7 +21,6 @@
 }
 
 .Container {
-  background-color: #342802;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -64,7 +63,7 @@
 .coin-img {
   margin-top: 25px;
 }
-/* Rewards2 */
+/* Rewards2 page */
 .points {
   position: absolute;
   right: 2%;
@@ -85,74 +84,61 @@
   margin-top: 85px;
   right: 7%;
 }
-.copoun1 {
+.rewards-container {
+  justify-content: center;
+  margin-top: 150px;
+
+}
+.rewards-container .coupon-box.coupon1 {
   position: relative;
   display: flex;
-  height: 170px;
+  height: 25vh;
   background-color:rgb(255, 232, 209) ; 
   border-radius:20px;
-  margin-top: 150px;
+  margin-top: 10px;
   width: 90%;
   color: #342802;
   align-items: center;
+  margin-left:3vh
 }
-.copun1-img {
+.rewards-container .coupon-box.coupon1 .coupon-img {
   display: flex;
-  width: 18vh;
+  width: 15vh;
   
 }
-.coupon-txt {
+.rewards-container .coupon-box.coupon1 .coupon-txt {
   align-self: center;
 }
-.copoun2 {
-  position: relative;
-  display: flex;
-  height: 170px;
-  background-color:rgb(255, 232, 209) ; 
-  border-radius:20px;
-  margin-top: 55px;
-  width: 90%;
-  color: #342802;
-  align-items: center;
-}
+
 /*Rewards3 page */
-.hover-txt {
+.redeems-container{
+  justify-content: center;
+  margin-top: 150px;
+}
+.redeems-container .hover-txt {
   position: relative;
   display: flex;
   color:#FFFCF1;
    opacity:0.8;
-   margin-top: 160px;
+   margin-top: 10px;
+   justify-content: center;
 
 }
-.redeem1 {
+.redeems-container .redeem1 {
   position: relative;
   display: flex;
   height: 70px;
   background-color:#ffe8d1 ; 
   border-radius:20px;
   margin-top: 10px;
-  width: 90%;
+  width: 90% ;
   color: #342802;
   align-items: center;
   justify-content: space-between;
+  margin-left:3vh
 
 }
-.hover-txt2 {
-   opacity:0.8;
-  
-}
-.redeem2 {
-  position: relative;
-  display: flex;
-  height: 70px;
-  background-color:#ffe8d1 ; 
-  border-radius:20px;
-  width: 90%;
-  color: #342802;
-  align-items: center;
-  justify-content: space-between;
-  top: -20px;
-}
+
 /* Settings page */
 .avatar {
   margin-top: 30px;
@@ -162,7 +148,7 @@
 }
 .section {
   background-color: #FFFCF1;
-  border-radius: 20px;
+  border-radius: 8px;
   color: #342802;
   margin-bottom: 5px;
   width: 40vh;
@@ -171,7 +157,7 @@
 }
 .section-phone {
   background-color: #FFFCF1;
-  border-radius: 20px;
+  border-radius: 8px;
   color: #342802;
   margin-bottom: 5px;
   width: 40vh;
@@ -182,16 +168,84 @@
   margin-left: 20px;
   margin-right: 5px;
 }
-/* Change */
+/* Change page */
 .change-main {
   margin-top: 30vh;
 }
-/* About */
+/* About page*/
 .about-txt{
  margin-right: 5vh;
  margin-left: 5vh;
 }
+/* Help page*/
+.help-main {
+  margin-top: 110px;
+}
+.searchBox {
+  width: 40vh;
+  background-color: rgb(255, 252, 241);
+  border-radius: 3px;
+}
+.questions-container {
+  margin-top:50px ;
+  width: 40vh;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  height: 30vh;
+  padding: 5px;
+  border-radius: 3px;
+  border: 1px solid hsl(47, 100%, 97%, 50%);
 
+}
+.questions-container h5{
+  opacity: 0.9;
+  margin-top: 10px;
 
-
+}
+.contact {
+  height: 22vh;
+  width: 40vh;
+  background-color: #FFFCF1;
+  margin-top: 50px;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  padding: 5px;
+  border-radius: 3px;
+}
+.contact h6 {
+  opacity: 0.6;
+}
+.contact-btn {
+  width: 15vh;
+  height: 5vh;
+  border-radius: 3px;
+  padding: 3px;
+  margin-top: 8px;
+}
+.contact-form input{
+  display: flex;
+  height: 35px; 
+  width: 30vh;
+  border-radius: 3px;
+}
+.contact-btn {
+  width: 10vh;
+}
+.contact-btn button {
+  background-color: rgb(0,0,0,0);
+  border: none;
+  color: #FFFCF1;
+}
+/* popup */
+.popup {
+  background-color:'#FFFCF1';
+    height:250px;
+    position:'absolute';
+    top:220;
+    width:250;
+    border-radius: 8px;
+    padding: 5px;
+}
 

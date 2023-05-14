@@ -14,9 +14,17 @@ const mongURL = "mongodb+srv://admin:bK9oZDsnBMNuGf91@checkfier.bywera9.mongodb.
 require('./User')
 require('./Store')
 require('./Adds')
+require('./Reward')
+require('./Rating')
+require('./Question')
+
 const User = mongoose.model("user")
 const Store = mongoose.model("store")
 const Ad = mongoose.model("ad")
+const Reward = mongoose.model("reward")
+const Rating = mongoose.model("rating")
+const Question = mongoose.model("question")
+
 app.use(bodyParser.json())
 app.use(express.json());
 app.use(cors());
@@ -80,8 +88,28 @@ mongoose.connect(mongURL,{
     // Return user info and points
     return res.json({ phone: user.phone, points: user.points });
   });
+
+  // Change number
+  app.patch('/changeNumber', async (req, res) => {
+    const { phone, newPhone } = req.body; // Get the old and new phone numbers from the request body
   
-  // Define a route for the store model
+    try {
+      // Find the user with the given phone number and update its phone number
+      const user = await User.findOneAndUpdate({ phone }, { phone: newPhone }, { new: true });
+  
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+  
+      return res.json(user); // Return the updated user object
+    } catch (error) {
+      console.error(error.message);
+      return res.status(500).json({ error: 'Server error' });
+    }
+  });
+  
+  
+  // Get store data
   app.get('/store', cors(), (req, res) => {
     // Fetch last data from the database
     Store.findOne().sort({ _id: -1 }).exec()
@@ -101,6 +129,7 @@ mongoose.connect(mongURL,{
         res.status(500).send('Internal server error', error);
       });
   });
+
 
 // Get advertisement data
 app.get('/ad', cors(),function(req, res) {
@@ -122,7 +151,85 @@ app.get('/ad', cors(),function(req, res) {
     });
 });
 
+// Get rewards data
+app.get('/rewards', async (req, res) => {
+  try {
+    // Get user's points
+    const userPoints = req.query.userPoints;
+    console.log(userPoints);
+    // Retrieve rewards that have points greater than or equal to user's points
+    const rewards = await Reward.find({ points: { $lte: userPoints } });
+
+    // Return rewards
+    res.status(200).json(rewards);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// Redeem a reward
+
+app.post('/redeem', async (req, res) => {
+  try {
+    // Retrieve user from database
+    const phone = req.query.phone;
+    const user = await User.findOne({ phone: phone });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Deduct redeemed points from user's total points
+    user.points -= req.query.redemptionPoints;
+
+    // Save updated user object to database
+    await user.save();
+    
+    // Return redemption code and updated user object
+    res.status(200).json({ user: user });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// POST /rate endpoint
+
+app.post('/rate', (req, res) => {
+  const { rating, comment, phone, date } = req.body;
+  console.log('Rating:', rating);
+  console.log('Comment:', comment);
+
+  const newRating = new Rating({ rating, comment, phone, date });
+  newRating.save()
+    .then(() => {
+      console.log('Rating data saved successfully.', rating, comment);
+      res.json({ success: true, message: 'Rating data saved successfully.', rating: rating, comment: comment, phone: phone, date: date });
+    })
+    .catch(error => {
+      console.error('Error saving rating data:', error);
+      res.json({ success: false, message: 'Rating data could not be saved.' });
+    });
+});
+
+// Handle /questions endpointapp.post('/rate', (req, res) => {
   
+app.post('/questions', (req, res) => {
+  const { question, userPhone, date } = req.body;
+  console.log('Question:', question);
+  console.log('userPhone:', userPhone);
+
+  const newQuestion = new Question({ question, userPhone, date });
+  newQuestion.save()
+    .then(() => {
+      console.log('Question saved successfully.', question, userPhone);
+      res.json({ success: true, message: 'Your question has been sent.', question: question, userPhone:userPhone,date: date });
+    })
+    .catch(error => {
+      console.error('Error saving rating data:', error);
+      res.json({ success: false, message: 'Question data could not be saved.' });
+    });
+});
+
+ 
   
   
   
