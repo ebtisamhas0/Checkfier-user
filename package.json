@@ -17,6 +17,7 @@
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.2",
+    "react-cookie": "^4.1.1",
     "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "^18.2.0",
     "react-evil-icons": "^0.5.0",
@@ -29,9 +30,12 @@
     "react-spinners": "^0.13.8",
     "react-star-rating": "^1.4.2",
     "react-star-ratings": "^2.3.0",
+    "react-use-cookie": "^1.4.0",
     "semantic-ui-react": "^2.1.4",
     "sharp": "^0.32.1",
     "simple-encryptor": "^4.0.0",
+    "socket.io": "^4.6.1",
+    "socket.io-client": "^4.6.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

@@ -4,7 +4,8 @@ const ratingSchema = new mongoose.Schema({
     rating: Number,
     comment: String,
     phone: Number,
-    date: String
+    date: String,
+    reply: String
 
     
   });

@@ -5,6 +5,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import StoreProvider from './components/StoreContext';
 import {UserProvider} from './components/UserContext';
+import LanguageProvider from './components/LanguageProvider';
+import { NotificationProvider } from './components/NotificationContext';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import {Signup} from "./pages/signup"
 import {Rewards1} from "./pages/Rewards1"
@@ -17,11 +19,14 @@ import {Settings} from "./pages/Settings"
 import { Navigationbar } from './components/Navigationbar';
 import { Login } from './pages/Login';
 import { Redeem } from './pages/Redeem';
+import { Notification } from './pages/Notification';
 
 function App() {
   return (
     <StoreProvider> 
     <UserProvider>
+      <LanguageProvider>
+        <NotificationProvider>
     <div className="App">
       <Router>
          <Navigationbar/>
@@ -36,12 +41,15 @@ function App() {
           <Route path='/About' Component={About}/>
           <Route path='/Settings' Component={Settings}/>
           <Route path='/Login' Component={Login}/>
+          <Route path='/Notification' Component={Notification}/>
           <Route path="/redeem/:code" element={<Redeem />} />
 
 
         </Routes>
       </Router>
     </div>
+    </NotificationProvider>
+    </LanguageProvider>
     </UserProvider>
     </StoreProvider>
 

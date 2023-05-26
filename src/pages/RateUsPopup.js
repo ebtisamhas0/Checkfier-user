@@ -5,20 +5,22 @@ import { useStore } from "../components/StoreContext";
 import { UserContext } from '../components/UserContext';
 import { useNavigate } from 'react-router-dom';
 import { BsFillArrowRightCircleFill } from 'react-icons/bs';
-
+import { LanguageContext } from '../components/LanguageContext';
+import helpTranslations from '../translations/help';
 
 export function RateUsPopup({ isOpen, onClose, onSubmit, initialPhone }) {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
   const [phone, setPhone] = useState(initialPhone);
   const {store} = useStore();
-  const { userPhone } = useContext(UserContext);
+  const { userPhone, points, setPoints} = useContext(UserContext);
+  const { language } = useContext(LanguageContext);
+  const translations = helpTranslations[language];
   const navigate = useNavigate();
-
   console.log('Rating:', rating);
   console.log('Comment:', comment);
 
-
+ 
 
 
   const handleRateUsPopupSubmit = (event) => {
@@ -34,7 +36,7 @@ export function RateUsPopup({ isOpen, onClose, onSubmit, initialPhone }) {
         rating: rating,
         comment: comment,
         phone: userPhone ,
-        date: currentDate
+        date: currentDate, 
       })
     })
     .then(response => response.json())
@@ -43,7 +45,7 @@ export function RateUsPopup({ isOpen, onClose, onSubmit, initialPhone }) {
       setRating(0); // reset the rating state variable to its initial value
       setComment(""); // reset the comment state variable to an empty string
       onSubmit({ rating, comment, phone });
-      alert("Thank you for your feedback!");
+      alert("Thank you for your feedback! you earned 15 points");
     })
     .catch(error => {
       console.error('Error submitting rating data:', error);
@@ -67,7 +69,7 @@ export function RateUsPopup({ isOpen, onClose, onSubmit, initialPhone }) {
         <button className="popup-close" onClick={onClose} style={{ backgroundColor: "transparent", border: "none", color: store.color, cursor: "pointer", float: "right", fontSize: "24px" }}>
           &times;
         </button>
-        <h2 style={{ marginTop: "20px",marginBottom:28}}>Rate Us</h2>
+        <h2 style={{ marginTop: "20px",marginBottom:28}}>{translations.rateUs}</h2>
         <form onSubmit={handleRateUsPopupSubmit}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "20px",fontSize:22 }}>
             <HeartRating rating={rating} onRatingChange={(value) => setRating(value)} />
@@ -78,7 +80,7 @@ export function RateUsPopup({ isOpen, onClose, onSubmit, initialPhone }) {
           </div>
           
           
-          <button type="submit" style={{ backgroundColor: 'rgba(0,0,0,0.0)', border: 'none', color:store.color, marginTop:22 }}>
+          <button type="submit" style={{ backgroundColor: 'rgba(0,0,0,0.0)', border: 'none', color:store.color, marginTop:35 }}>
           <BsFillArrowRightCircleFill size={30} />
 
           </button>

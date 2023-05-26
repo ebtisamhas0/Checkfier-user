@@ -2,13 +2,20 @@ import React, { useState, useContext } from "react";
 import '../App.css'
 import { useStore } from "../components/StoreContext";
 import { UserContext } from '../components/UserContext';
-import { AiOutlineSearch,AiOutlineRight } from "react-icons/ai";
-import axios from 'axios';
+import { AiOutlineRight } from "react-icons/ai";
+import { LanguageContext } from '../components/LanguageContext';
+import helpTranslations from '../translations/help';
 
 export function Help() {
   const { store } = useStore();
   const [question, setQuestion] = useState('');
   const { userPhone, setUserPhone } = useContext(UserContext);
+  const [showPopup, setShowPopup] = useState(false);
+  const [showSecondPopup, setShowSecondPopup] = useState(false);
+  const [showThirdPopup, setShowThirdPopup] = useState(false);
+  const [showFourthPopup, setShowFourthPopup] = useState(false);
+  const { language } = useContext(LanguageContext);
+  const translations = helpTranslations[language];
 
 
   const handleSubmit = async (event) => {
@@ -39,39 +46,76 @@ export function Help() {
       alert('Your question has been submitted!');
     } catch (error) {
       console.error('Error submitting question:', error);
-      alert('There was an error submitting your question. Please try again later.');
+      alert('There was an error try again');
     }
-  
   };
 
+  const togglePopup = () => {
+    setShowPopup(!showPopup);
+  }
+  const secondPopup = () => {
+    setShowSecondPopup(!showSecondPopup);
+  }
+  const thirdPopup = () => {
+    setShowThirdPopup(!showThirdPopup);
+  }
+  const fourthPopup = () => {
+    setShowFourthPopup(!showFourthPopup);
+  }
 
   return (
     <div className="Container" style={{backgroundColor:store.color}}>
       <div className="help-main">
-        <h2>How can I help you?</h2>
+        <h2>{translations.title}</h2>
         <div className="questions-container">
-          <h5>Getting started<AiOutlineRight style={{fontSize:15}}/> </h5> 
-          <h5>Create Account<AiOutlineRight style={{fontSize:15}}/> </h5> 
-          <h5>Get Points<AiOutlineRight style={{fontSize:15}}/> </h5> 
-          <h5>Change phone number<AiOutlineRight style={{fontSize:15}}/> </h5> 
+          <h5 onClick={togglePopup} >{translations.gettingStarted}<AiOutlineRight style={{fontSize:15}}/></h5> 
+          <h5 onClick={secondPopup}>{translations.createAccount}<AiOutlineRight style={{fontSize:15}}/> </h5> 
+          <h5 onClick={thirdPopup}>{translations.getPoints}<AiOutlineRight style={{fontSize:15}}/> </h5> 
+          <h5 onClick={fourthPopup}>{translations.changePhoneNumber}<AiOutlineRight style={{fontSize:15}}/> </h5> 
         </div>
 
         <div className="contact" style={{color:store.color}}>
-          <h5>Do you still need our help?</h5>
-          <h6>Send your question and we'll back soon </h6>
+          <h5>{translations.stillNeedHelp}</h5>
+          <h6>{translations.sendQuestion} </h6>
 
           <form onSubmit={handleSubmit} className="contact-form">
-          <input type="text" id="question" name="question" value={question} onChange={(event) => setQuestion(event.target.value)} required />
+            <input type="text" id="question" name="question" value={question} onChange={(event) => setQuestion(event.target.value)} required />
             <div className="contact-btn" style={{backgroundColor:store.color}}>
-              <button type="submit">Send</button>
+              <button type="submit">{translations.sendButton}</button>
             </div>
           </form>
+          {showPopup ? (
+            <div className="help-popup">
+            <button onClick={togglePopup}>✖</button>
+            <h3 className="about-txt"> {store.name}{translations.gettingStartedPopup}</h3>
+            </div>
+          ) : null}
+
+         {showSecondPopup ? (
+            <div className="help-popup">
+            <button onClick={secondPopup}>✖</button>
+            <h3 className="about-txt"> {translations.createAccountPopup}</h3>
+            </div>
+          ) : null} 
+
+         {showThirdPopup ? (
+            <div className="help-popup">
+            <button onClick={thirdPopup}>✖</button>
+            <h3 className="about-txt"> {translations.getPointsPopup}</h3>
+            </div>
+          ) : null}
+
+          {showFourthPopup ? (
+            <div className="help-popup">
+            <button onClick={fourthPopup}>✖</button>
+            <h3 className="about-txt"> {translations.changePhoneNumberPopup}</h3>
+            </div>
+          ) : null}  
         </div>
       </div>
     </div>
   );
 }
-
 
 
 

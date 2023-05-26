@@ -4,17 +4,21 @@ import { useStore } from '../components/StoreContext';
 import { BsFillArrowRightCircleFill } from 'react-icons/bs';
 import '../App.css';
 import { UserContext } from '../components/UserContext';
-
+import { useLanguage } from '../components/LanguageContext';
+import loginTranslations from '../translations/login';
 export function Login() {
   const [phone, setPhone] = useState('');
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const { store } = useStore();
-  
-  const handleOnNavigate = () => navigate('/Rewards1');
-  const handleSignup = () => navigate("/")
   const { login } = useContext(UserContext);
-   
+  const { language } = useLanguage();
+  const translations = loginTranslations[language];
+
+
+  const handleOnNavigate = () => navigate('/Rewards1');
+  const handleSignup = () => navigate('/');
+
   const handleLogin = async (event) => {
     event.preventDefault();
     setError(null);
@@ -25,7 +29,7 @@ export function Login() {
         body: JSON.stringify({ phone }),
       });
       const { phone: userPhone, points } = await response.json();
-      alert(`Logged in successfully as ${userPhone}, your points is: ${points}`);
+      alert(`${translations.loginSuccess} ${userPhone}, ${translations.yourPointsIs}: ${points}`);
       login(userPhone, points);
       // Set cookie with user's phone number and points
       const expirationTime = new Date(Date.now() + 2 * 60 * 60 * 1000); // current time + 2 hours in milliseconds
@@ -33,29 +37,26 @@ export function Login() {
       handleOnNavigate();
     } catch (error) {
       console.error(error);
-      setError('An error occurred. Please try again later.' + error);
+      setError(`${translations.errorOccurred} ${error}`);
     }
   };
-  
-  
-  
 
   if (!store.logo || !store.name) {
-    return <p>Loading...</p>;
+    return <p>{translations.loading}</p>;
   }
 
   return (
     <div className='Container' style={{backgroundColor:store.color}}>
       <div>
         <img className='logo' src={store.logo} alt={store.name} style={{ width: 150, height: 150 }} />
-        <h3 className='txt1'>Welcome To {store.name} CheckIn </h3>
-        <h5 className='txt2'>Login To Your Account!</h5>
+        <h3 className='txt1'>{translations.welcomeTo} {store.name} {translations.checkIn}</h3>
+        <h5 className='txt2'>{translations.loginTo} {translations.yourAccount}!</h5>
         <form onSubmit={handleLogin}>
           {error && alert(error)}
           <input
             className='inputBox'
             type={'text'}
-            placeholder='05'
+            placeholder={translations.phonePlaceholder}
             minLength={10}
             maxLength={10}
             required={true}
@@ -64,7 +65,7 @@ export function Login() {
               setPhone(event.target.value);
             }}
           />
-          <h5 style={{ opacity: 0.5 }} onClick={handleSignup}>Don't have an account? signup</h5>
+          <h5 style={{ opacity: 0.5 }} onClick={handleSignup}>{translations.dontHaveAnAccount} {translations.signup}</h5>
           <div>
             <button type='submit' style={{ backgroundColor: 'rgba(0,0,0,0.0)', border: 'none', color: '#FFFCF1' }}>
               <BsFillArrowRightCircleFill size={30} />

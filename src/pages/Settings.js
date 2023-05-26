@@ -7,6 +7,10 @@ import {FaGratipay} from 'react-icons/fa'
 import '../App.css';
 import {UpdatePhonePopup} from './UpdatePhonePopup';
 import {RateUsPopup} from "./RateUsPopup";
+import { LanguageContext } from '../components/LanguageContext';
+import rewardsTranslations from '../translations/rewards';
+import LanguageSelector from '../components/LanguageSelector';
+
 
 export function Settings() {
   const navigate = useNavigate();
@@ -14,7 +18,10 @@ export function Settings() {
   const { userPhone } = useContext(UserContext);
   const [showRateUsPopup, setShowRateUsPopup] = useState(false); // State for showing or hiding the Rate Us popup
   const [showUpdatePhonePopup, setShowUpdatePhonePopup] = useState(false); // State for showing or hiding the Update Phone popup
+  const { language } = useContext(LanguageContext);
+  const translations = rewardsTranslations[language];
 
+  
   const handleAboutNavigate = () => navigate("/About");
   const handleHelpNavigate = () => navigate("/Help");
 
@@ -30,23 +37,24 @@ export function Settings() {
 
   return (
     <div className="Container" style={{ backgroundColor: store.color }}>
+       <LanguageSelector />
       <img className='avatar' src={require('../images/user.png')} height='128vh'></img>
       <hr style={{ width: '90%' }} />
       <div className='settings-main'>
         <div className='section d-flex'>
           <AiOutlineInfoCircle style={{ marginTop: 8 }} />
-          <h4 style={{ marginTop: 8 }}>About</h4>
+          <h4 style={{ marginTop: 8 }}>{translations.about}</h4>
           <AiOutlineRight onClick={handleAboutNavigate} style={{ marginTop: 8 }} />
         </div>
         <div className='section d-flex'>
           <AiOutlineQuestionCircle style={{ marginTop: 8 }} />
-          <h4 style={{ marginTop: 8 }}>Help centre</h4>
+          <h4 style={{ marginTop: 8 }}>{translations.helpCentre}</h4>
           <AiOutlineRight onClick={handleHelpNavigate} style={{ marginTop: 8 }} />
         </div>
 
         <div className='section d-flex'>
           <FaGratipay style={{ marginTop: 8 }} />
-          <h4 style={{ marginTop: 8 }}>Rate US</h4>
+          <h4 style={{ marginTop: 8 }}>{translations.rating}</h4>
           <AiOutlineRight 
             onClick={() => setShowRateUsPopup(true)}
             style={{ marginTop: 8 }}
@@ -56,10 +64,10 @@ export function Settings() {
 
         <div className='section-phone  d-flex'>
           <AiOutlinePhone style={{ marginTop: 8 }} />
-          <h4 className='phone-num' style={{ marginTop: 8 }}>Phone: {userPhone}</h4>
+          <h4 className='phone-num' style={{ marginTop: 8 }}>{translations.phone} {userPhone}</h4>
           <label ></label>
         </div>
-          <button style={{ opacity: 0.7, backgroundColor: 'rgba(0,0,0,0.0)', border: 'none', color: '#FFFCF1',fontSize:22 }}onClick={handleChangeNavigate} >Change phone number?</button>
+          <button style={{ opacity: 0.7, backgroundColor: 'rgba(0,0,0,0.0)', border: 'none', color: '#FFFCF1',fontSize:22 }}onClick={handleChangeNavigate} >{translations.Changephone}</button>
       </div>
           {showUpdatePhonePopup && <UpdatePhonePopup userPhone={userPhone} isOpen={true} onClose={() => setShowUpdatePhonePopup(false)} initialPhone={userPhone} />}
           

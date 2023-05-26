@@ -3,13 +3,18 @@ import axios from 'axios';
 import { useStore } from '../components/StoreContext';
 import { BsFillArrowRightCircleFill } from 'react-icons/bs';
 import { UserContext } from '../components/UserContext';
+import { LanguageContext } from '../components/LanguageContext';
+import rewardsTranslations from '../translations/rewards';
+
 
 export function UpdatePhonePopup({ userPhone, onClose }) {
   const [newPhone, setNewPhone] = useState(''); // State for the new phone number input
   const [error, setError] = useState(null); // State for any errors during the update operation
   const {store} = useStore();
   const { setUserPhone } = useContext(UserContext);
-
+  const { language } = useContext(LanguageContext);
+  const translations = rewardsTranslations[language];
+  
   // Function to update the user's phone number
   function updatePhoneNumber() {
     axios.patch('http://localhost:3000/changeNumber', { phone: userPhone, newPhone })
@@ -35,9 +40,9 @@ export function UpdatePhonePopup({ userPhone, onClose }) {
     top:220,width:300,
     padding:10, left:20}}>
       <div className="popup-content">
-        <h2 style={{marginTop: 35}}>Update Phone Number</h2>
+        <h2 style={{marginTop: 35}}>{translations. updatePhone}</h2>
         <form onSubmit={(event) => { event.preventDefault(); updatePhoneNumber(); }}>
-          <label htmlFor="new-phone" style={{fontSize:20,marginTop:22}}>New Phone Number:</label>
+          <label htmlFor="new-phone" style={{fontSize:20,marginTop:22}}>{translations.newNumber}</label>
           <input type="text" id="new-phone" name="new-phone" value={newPhone} onChange={(event) => setNewPhone(event.target.value)} 
           style={{width:'30vh'}}/>
           <br/><br/>
