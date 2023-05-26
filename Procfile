@@ -1,2 +1,2 @@
-web: cd server && npm install && npm start
-api: npm install && nodemon app
+web: cd server && npm install && nodemon app
+api: npm install && npm start
