@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/static/css/main.f1f9c0bd.css",
+    "main.js": "/static/js/main.612e378e.js",
+    "static/js/787.758b61af.chunk.js": "/static/js/787.758b61af.chunk.js",
+    "static/media/HishamLTRegular.ttf": "/static/media/HishamLTRegular.0035f68bc58ef0aedcd0.ttf",
+    "static/media/FrutigerLTArabic-65Bold.ttf": "/static/media/FrutigerLTArabic-65Bold.d6711fd45546ad1f400f.ttf",
+    "static/media/FrutigerLTArabic-75Black.ttf": "/static/media/FrutigerLTArabic-75Black.7895b3f5b2026b743080.ttf",
+    "static/media/coupon1.png": "/static/media/coupon1.ae2a8ae3eaeb098752ff.png",
+    "static/media/bader_al merkaz_0.ttf": "/static/media/bader_al merkaz_0.5bd15d2863a2993f1252.ttf",
+    "static/media/rewards1.png": "/static/media/rewards1.ae3a330d40cc68f47aa4.png",
+    "static/media/reward.png": "/static/media/reward.b4a9f89373d5bfe90530.png",
+    "static/media/user.png": "/static/media/user.4f0883d2791043a16843.png",
+    "static/media/coin.png": "/static/media/coin.e4aebc476003977d9420.png",
+    "index.html": "/index.html",
+    "main.f1f9c0bd.css.map": "/static/css/main.f1f9c0bd.css.map",
+    "main.612e378e.js.map": "/static/js/main.612e378e.js.map",
+    "787.758b61af.chunk.js.map": "/static/js/787.758b61af.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.f1f9c0bd.css",
+    "static/js/main.612e378e.js"
+  ]
+}
