@@ -385,10 +385,6 @@ app.get('/notifications', async (req, res) => {
 });
 
 
-
-  
-
-
 app.get('/', cors(),(req,res)=>{
     User.find({})
     .then(data =>{
