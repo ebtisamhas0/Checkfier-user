@@ -23,7 +23,7 @@ export function Notification() {
       setUnreadCount(updatedUnreadCount);
       localStorage.setItem('unreadNotificationsCount', updatedUnreadCount);
     } else {
-      fetch(`http://localhost:3000/notifications?userPhone=${userPhone}`)
+      fetch(`http://localhost:8080/notifications?userPhone=${userPhone}`)
         .then(response => response.json())
         .then(data => {
           if (data.success) {

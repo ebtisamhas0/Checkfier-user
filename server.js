@@ -14,15 +14,15 @@ const http = require('http');
 const mongURL = "mongodb+srv://admin:bK9oZDsnBMNuGf91@checkfier.bywera9.mongodb.net/?retryWrites=true&w=majority"
 
 
-require('./User')
-require('./Store')
-require('./Adds')
-require('./Reward')
-require('./Rating')
-require('./Question')
-require('./Redeem')
-require('./Notification')
-require('./Campaign')
+require('./models/User')
+require('./models/Store')
+require('./models/Adds')
+require('./models/Reward')
+require('./models/Rating')
+require('./models/Question')
+require('./models/Redeem')
+require('./models/Notification')
+require('./models/Campaign')
 
 
 const User = mongoose.model("user")

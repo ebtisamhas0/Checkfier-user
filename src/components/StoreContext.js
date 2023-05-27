@@ -10,7 +10,7 @@ const StoreProvider = ({ children }) => {
   const [store, setStore] = useState({ logo: '', name: '', color: '' });
 
   useEffect(() => {
-    fetch('http://localhost:3000/store')
+    fetch('http://localhost:8080/store')
       .then(response => response.json())
       .then(data => {
         // Decode the logo image data from base64 to binary data

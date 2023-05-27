@@ -17,7 +17,7 @@ export function UpdatePhonePopup({ userPhone, onClose }) {
   
   // Function to update the user's phone number
   function updatePhoneNumber() {
-    axios.patch('http://localhost:3000/changeNumber', { phone: userPhone, newPhone })
+    axios.patch('http://localhost:8080/changeNumber', { phone: userPhone, newPhone })
       .then(response => {
         const updatedUser = response.data; 
         console.log(updatedUser.phone); 

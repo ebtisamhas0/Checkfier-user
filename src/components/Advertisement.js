@@ -8,7 +8,7 @@ export function Advertisement() {
     const [showAd, setShowAd] = useState(true);
     
     useEffect(() => {
-      fetch('http://localhost:3000/ad')
+      fetch('http://localhost:8080/ad')
         .then(response => {
           if (!response.ok) {
             throw new Error('Network response was not ok');
