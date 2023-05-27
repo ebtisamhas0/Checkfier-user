@@ -215,13 +215,6 @@ app.get('/campaign/latest', cors(), async function(req, res) {
 });
 
 
- 
-
-
-
-
-
-
 // Get rewards data
 app.get('/rewards', async (req, res) => {
   try {
@@ -384,15 +377,6 @@ app.get('/notifications', async (req, res) => {
 });
 
 
-app.get('/', cors(),(req,res)=>{
-    User.find({})
-    .then(data =>{
-        console.log(data)
-        res.send(data)
-    }).catch(err => {
-        console.log(err)
-    })
-})
  
 app.get("*", (req,res) => {
   res.sendFile(path.resolve(__dirname, "build", "index.html"));
