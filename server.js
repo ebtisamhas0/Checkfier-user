@@ -11,8 +11,7 @@ const cookieParser = require('cookie-parser');
 const http = require('http');
 
 
-const mongURL = "mongodb+srv://admin:bK9oZDsnBMNuGf91@checkfier.bywera9.mongodb.net/?retryWrites=true&w=majority"
-
+const mongURL = "mongodb+srv://admin:bK9oZDsnBMNuGf91@checkfier.bywera9.mongodb.net/?retryWrites=true&w=majority";
 
 require('./models/User')
 require('./models/Store')
@@ -395,7 +394,9 @@ app.get('/', cors(),(req,res)=>{
     })
 })
  
-
+app.get("*", (req,res) => {
+  res.sendFile(path.resolve(__dirname, "build", "index.html"));
+})
 
 app.listen(port,()=>{
     console.log(`Listening on ${port} `)
