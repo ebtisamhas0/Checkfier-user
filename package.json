@@ -13,6 +13,7 @@
     "bootstrap": "^5.2.3",
     "browser-history": "^1.0.1",
     "buffer": "^6.0.3",
+    "concurrently": "^8.0.1",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
