@@ -27,7 +27,7 @@ export function RateUsPopup({ isOpen, onClose, onSubmit, initialPhone }) {
     event.preventDefault(); // prevent the default form submission behavior
 
     const currentDate = new Date().toISOString().slice(0, 10);
-    fetch('http://localhost:8080/rate', {
+    fetch('http://localhost:3000/rate', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

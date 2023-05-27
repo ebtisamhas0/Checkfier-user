@@ -23,7 +23,7 @@ export function Help() {
     const currentDate = new Date().toISOString().slice(0, 10);
   
     try {
-      const response = await fetch('http://localhost:8080/questions', {
+      const response = await fetch('http://localhost:3000/questions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

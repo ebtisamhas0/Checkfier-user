@@ -23,7 +23,7 @@ export function Rewards2() {
       try {
         // Fetch rewards from the server with points greater than or equal to the user's points
         console.log(`Fetching rewards from server with userPoints=${userPoints}...`);
-        const response = await fetch(`http://localhost:8080/rewards?userPoints=${userPoints}`);
+        const response = await fetch(`http://localhost:3000/rewards?userPoints=${userPoints}`);
         const rewardsData = await response.json();
         console.log('Rewards Data:', rewardsData);
     
