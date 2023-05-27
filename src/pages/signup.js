@@ -5,6 +5,7 @@ import { useStore } from '../components/StoreContext';
 import { LanguageContext } from '../components/LanguageContext';
 import signupTranslations from '../translations/signup';
 
+
 export function Signup() {
   const [phone, setPhone] = useState('');
   const [error, setError] = useState(null);
