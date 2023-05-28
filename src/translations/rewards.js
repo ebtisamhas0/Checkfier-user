@@ -17,7 +17,9 @@ const rewardsTranslations = {
         navReward: 'Rewards',
         settings:'Settings',
         noReward: 'You have no rewards',
-        Copoun: 'Copoun unlocked' 
+        Copoun: 'Copoun unlocked' ,
+        failed: "Failed to update phone number",
+        success: "Your phone number has been changed. Your current number is:"
 
     },
     ar:{
@@ -38,7 +40,9 @@ const rewardsTranslations = {
         navReward: 'المكافآت',
         settings:'الإعدادات',
         noReward: 'ليس لديك مكافآت',
-        Copoun: 'القسيمة متاحة'
+        Copoun: 'القسيمة متاحة',
+        failed:"فشل تحديث رقم الجوال",
+        success: "تم تحديث رقم الجوال بنجاح، رقمك الحالي هو:"
     }
 }
 export default rewardsTranslations;

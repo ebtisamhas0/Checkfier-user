@@ -1,12 +1,11 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { useStore } from '../components/StoreContext';
-import { BsFillArrowRightCircleFill } from 'react-icons/bs';
 import { UserContext } from '../components/UserContext';
 import { LanguageContext } from '../components/LanguageContext';
 import rewardsTranslations from '../translations/rewards';
 import { serverUrl } from '../config';
-
+import { BsFillArrowRightCircleFill, BsFillXCircleFill } from 'react-icons/bs';
 
 export function UpdatePhonePopup({ userPhone, onClose }) {
   const [newPhone, setNewPhone] = useState(''); // State for the new phone number input
@@ -22,7 +21,7 @@ export function UpdatePhonePopup({ userPhone, onClose }) {
       .then(response => {
         const updatedUser = response.data; 
         console.log(updatedUser.phone); 
-        alert(`Your phone number has been changed. Your current number is: ${updatedUser.phone}`);
+        alert(`${translations.success} ${updatedUser.phone}`);
         setNewPhone('');
         setUserPhone(newPhone);
         setError(null); 
@@ -30,7 +29,7 @@ export function UpdatePhonePopup({ userPhone, onClose }) {
       })
       .catch(error => {
         console.error(error.message);
-        setError('Failed to update phone number'); // Set the error state
+        setError(`${translations.failed}`); // Set the error state
       });
   }
 
@@ -41,6 +40,7 @@ export function UpdatePhonePopup({ userPhone, onClose }) {
     top:220,width:300,
     padding:10, left:50}}>
       <div className="popup-content">
+      <BsFillXCircleFill className="close-icon" onClick={onClose} />
         <h2 style={{marginTop: 35}}>{translations. updatePhone}</h2>
         <form onSubmit={(event) => { event.preventDefault(); updatePhoneNumber(); }}>
           <label htmlFor="new-phone" style={{fontSize:20,marginTop:22}}>{translations.newNumber}</label>
@@ -54,9 +54,6 @@ export function UpdatePhonePopup({ userPhone, onClose }) {
         </form>
         {error && <div className="error">{error}</div>}
       </div>
-    </div>
-  );
+    </div>
+  );
 }
-
-
-

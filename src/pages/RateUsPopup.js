@@ -4,7 +4,7 @@ import {HeartRating} from "../components/HeartRating";
 import { useStore } from "../components/StoreContext";
 import { UserContext } from '../components/UserContext';
 import { useNavigate } from 'react-router-dom';
-import { BsFillArrowRightCircleFill } from 'react-icons/bs';
+import { BsFillArrowRightCircleFill, BsFillXCircleFill } from 'react-icons/bs';
 import { LanguageContext } from '../components/LanguageContext';
 import helpTranslations from '../translations/help';
 import { serverUrl } from '../config';
@@ -68,10 +68,8 @@ export function RateUsPopup({ isOpen, onClose, onSubmit, initialPhone }) {
         top:220,width:300,
         padding:10,left:50,borderRadius: 8}}>
       <div className="popup-content">
-        <button className="popup-close" onClick={onClose} style={{ backgroundColor: "transparent", border: "none", color: store.color, cursor: "pointer", float: "right", fontSize: "24px" }}>
-          &times;
-        </button>
-        <h2 style={{ marginTop: "20px",marginBottom:28,marginLeft:5}}>{translations.rateUs}</h2>
+      <BsFillXCircleFill className="close-icon" onClick={onClose} />
+        <h2 style={{ marginTop: "20px",marginBottom:28,marginLeft:10}}>{translations.rateUs}</h2>
         <form onSubmit={handleRateUsPopupSubmit}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "20px",fontSize:22 }}>
             <HeartRating rating={rating} onRatingChange={(value) => setRating(value)} />
