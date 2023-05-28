@@ -71,7 +71,7 @@ export function RateUsPopup({ isOpen, onClose, onSubmit, initialPhone }) {
         <button className="popup-close" onClick={onClose} style={{ backgroundColor: "transparent", border: "none", color: store.color, cursor: "pointer", float: "right", fontSize: "24px" }}>
           &times;
         </button>
-        <h2 style={{ marginTop: "20px",marginBottom:28}}>{translations.rateUs}</h2>
+        <h2 style={{ marginTop: "20px",marginBottom:28,marginLeft:5}}>{translations.rateUs}</h2>
         <form onSubmit={handleRateUsPopupSubmit}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "20px",fontSize:22 }}>
             <HeartRating rating={rating} onRatingChange={(value) => setRating(value)} />
