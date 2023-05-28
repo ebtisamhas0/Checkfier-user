@@ -39,7 +39,7 @@ export function UpdatePhonePopup({ userPhone, onClose }) {
     backgroundColor:'#FFFCF1',
     height:300,position:'absolute',
     top:220,width:300,
-    padding:10, left:30}}>
+    padding:10, left:35}}>
       <div className="popup-content">
         <h2 style={{marginTop: 35}}>{translations. updatePhone}</h2>
         <form onSubmit={(event) => { event.preventDefault(); updatePhoneNumber(); }}>
