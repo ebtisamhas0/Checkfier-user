@@ -66,7 +66,7 @@ export function RateUsPopup({ isOpen, onClose, onSubmit, initialPhone }) {
         backgroundColor:'#FFFCF1',
         height:360,position:'absolute',
         top:220,width:300,
-        padding:10,left:35,borderRadius: 8}}>
+        padding:10,left:50,borderRadius: 8}}>
       <div className="popup-content">
         <button className="popup-close" onClick={onClose} style={{ backgroundColor: "transparent", border: "none", color: store.color, cursor: "pointer", float: "right", fontSize: "24px" }}>
           &times;

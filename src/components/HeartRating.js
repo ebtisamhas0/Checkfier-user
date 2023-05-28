@@ -9,7 +9,7 @@ export function HeartRating({ rating, onRatingChange }) {
   return (
     <div>
       {[1, 2, 3, 4, 5].map((value) => (
-        <span key={value} style={{ color: value <= rating ? "#ad2323" : "gray", touchAction: "manipulation" }} onClick={() => handleRatingChange(value)}>
+        <span key={value} style={{ color: value <= rating ? "#ad2323" : "gray", cursor: "pointer" }} onTouchStart={() => handleRatingChange(value)}>
           ❤
         </span>
       ))}
