@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useStore } from '../components/StoreContext';
 import { LanguageContext } from '../components/LanguageContext';
 import signupTranslations from '../translations/signup';
+import { serverUrl } from '../config';
 
 
 export function Signup() {
@@ -22,7 +23,7 @@ export function Signup() {
     setError(null);
 
     try {
-      const response = await fetch('http://localhost:3000/register', {
+      const response = await fetch(`${serverUrl}/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

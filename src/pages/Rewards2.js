@@ -6,6 +6,7 @@ import { UserContext } from '../components/UserContext';
 import { Campaign } from '../components/Campaign';
 import { LanguageContext } from '../components/LanguageContext';
 import rewardsTranslations from '../translations/rewards';
+import { serverUrl } from '../config';
 
 export function Rewards2() {
   const navigate = useNavigate()
@@ -23,7 +24,7 @@ export function Rewards2() {
       try {
         // Fetch rewards from the server with points greater than or equal to the user's points
         console.log(`Fetching rewards from server with userPoints=${userPoints}...`);
-        const response = await fetch(`http://localhost:3000/rewards?userPoints=${userPoints}`);
+        const response = await fetch(`${serverUrl}/rewards?userPoints=${userPoints}`);
         const rewardsData = await response.json();
         console.log('Rewards Data:', rewardsData);
     

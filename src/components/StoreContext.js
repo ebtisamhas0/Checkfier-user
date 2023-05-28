@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import { serverUrl } from '../config';
 
 const StoreContext = createContext();
 
@@ -10,7 +11,7 @@ const StoreProvider = ({ children }) => {
   const [store, setStore] = useState({ logo: '', name: '', color: '' });
 
   useEffect(() => {
-    fetch('http://localhost:3000/store')
+    fetch(`'${serverUrl}/store`)
       .then(response => response.json())
       .then(data => {
         // Decode the logo image data from base64 to binary data

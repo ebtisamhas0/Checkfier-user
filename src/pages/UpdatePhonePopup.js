@@ -5,6 +5,7 @@ import { BsFillArrowRightCircleFill } from 'react-icons/bs';
 import { UserContext } from '../components/UserContext';
 import { LanguageContext } from '../components/LanguageContext';
 import rewardsTranslations from '../translations/rewards';
+import { serverUrl } from '../config';
 
 
 export function UpdatePhonePopup({ userPhone, onClose }) {
@@ -17,7 +18,7 @@ export function UpdatePhonePopup({ userPhone, onClose }) {
   
   // Function to update the user's phone number
   function updatePhoneNumber() {
-    axios.patch('http://localhost:3000/changeNumber', { phone: userPhone, newPhone })
+    axios.patch(`${serverUrl}/changeNumber`, { phone: userPhone, newPhone })
       .then(response => {
         const updatedUser = response.data; 
         console.log(updatedUser.phone); 

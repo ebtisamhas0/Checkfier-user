@@ -6,6 +6,7 @@ import '../App.css';
 import { UserContext } from '../components/UserContext';
 import { useLanguage } from '../components/LanguageContext';
 import loginTranslations from '../translations/login';
+import { serverUrl } from '../config';
 
 export function Login() {
   const [phone, setPhone] = useState('');
@@ -24,7 +25,7 @@ export function Login() {
     event.preventDefault();
     setError(null);
     try {
-      const response = await fetch('http://localhost:3000/login', {
+      const response = await fetch(`${serverUrl}/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ phone }),

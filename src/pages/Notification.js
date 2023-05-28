@@ -4,6 +4,7 @@ import { NotificationContext } from '../components/NotificationContext';
 import { useStore } from "../components/StoreContext";
 import helpTranslations from '../translations/help';
 import { LanguageContext } from '../components/LanguageContext';
+import { serverUrl } from '../config';
 
 export function Notification() {
   const [notifications, setNotifications] = useState([]);
@@ -23,7 +24,7 @@ export function Notification() {
       setUnreadCount(updatedUnreadCount);
       localStorage.setItem('unreadNotificationsCount', updatedUnreadCount);
     } else {
-      fetch(`http://localhost:3000/notifications?userPhone=${userPhone}`)
+      fetch(`${serverUrl}/notifications?userPhone=${userPhone}`)
         .then(response => response.json())
         .then(data => {
           if (data.success) {

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Buffer } from 'buffer';
 import Carousel from 'react-bootstrap/Carousel';
+import { serverUrl } from '../config';
 
 export function Campaign() {
     const [campaignImage, setCampaignImage] = useState('');
@@ -8,7 +9,7 @@ export function Campaign() {
 
 
   useEffect(() => {
-    fetch('http://localhost:3000/campaign/latest')
+    fetch(`${serverUrl}/campaign/latest`)
     .then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');

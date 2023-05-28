@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import {Campaign} from '../components/Campaign';
 import { LanguageContext } from '../components/LanguageContext';
 import rewardsTranslations from '../translations/rewards';
+import { serverUrl } from '../config';
 
 export function Rewards3() {
     const navigate = useNavigate()
@@ -22,7 +23,7 @@ export function Rewards3() {
        
         // Redeem reward from the server
         console.log(`Redeeming reward with code=${code}, points=${points}, redemptionPoints=${redemptionPoints}...`);
-        const response = await fetch(`http://localhost:3000/redeem?phone=${userPhone}&redemptionPoints=${redemptionPoints}`, {
+        const response = await fetch(`${serverUrl}/redeem?phone=${userPhone}&redemptionPoints=${redemptionPoints}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -51,7 +52,7 @@ export function Rewards3() {
       try {
         // Fetch rewards from the server with points greater than or equal to the user's points
         console.log(`Fetching rewards from server with userPoints=${userPoints}...`);
-        const response = await fetch(`http://localhost:3000/rewards?userPoints=${userPoints}`);
+        const response = await fetch(`${serverUrl}/rewards?userPoints=${userPoints}`);
         const rewardsData = await response.json();
         console.log('Rewards Data:', rewardsData);
     

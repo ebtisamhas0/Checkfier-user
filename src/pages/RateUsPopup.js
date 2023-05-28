@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { BsFillArrowRightCircleFill } from 'react-icons/bs';
 import { LanguageContext } from '../components/LanguageContext';
 import helpTranslations from '../translations/help';
+import { serverUrl } from '../config';
 
 export function RateUsPopup({ isOpen, onClose, onSubmit, initialPhone }) {
   const [rating, setRating] = useState(0);
@@ -16,6 +17,7 @@ export function RateUsPopup({ isOpen, onClose, onSubmit, initialPhone }) {
   const { userPhone, points, setPoints} = useContext(UserContext);
   const { language } = useContext(LanguageContext);
   const translations = helpTranslations[language];
+
   const navigate = useNavigate();
   console.log('Rating:', rating);
   console.log('Comment:', comment);
@@ -27,7 +29,7 @@ export function RateUsPopup({ isOpen, onClose, onSubmit, initialPhone }) {
     event.preventDefault(); // prevent the default form submission behavior
 
     const currentDate = new Date().toISOString().slice(0, 10);
-    fetch('http://localhost:3000/rate', {
+    fetch(`${serverUrl}/rate`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
