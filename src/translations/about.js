@@ -2,7 +2,7 @@ const aboutTranslations = {
     en: {
       about: {
         title: 'About Us',
-        description: '{name} is a reward system web-app where you can easily sign up through phone number and easily track your point, rewards and redeems.',
+        description: ' is a reward system web-app where you can easily sign up through phone number and easily track your point, rewards and redeems.',
         backButton: 'Back'
       }
     },
