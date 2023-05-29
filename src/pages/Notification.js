@@ -98,7 +98,7 @@ export function Notification() {
             </div>
           </div>
         ) : (
-          <p>{translations.noNotif}</p>
+          <p style={{marginTop: 30}}>{translations.noNotif}</p>
         )}
       </div>
     </div> 

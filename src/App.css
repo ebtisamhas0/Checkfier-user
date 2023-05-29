@@ -282,7 +282,7 @@
   color: rgb(189, 187, 187);
 }
 #notif-content {
-  border: 1px solid rgb(255, 232, 209, 0.3);
+  border: 1px solid rgb(255, 232, 209, 0.1);
   padding: 7px 5px 5px 2px;
   border-radius: 5px;
   margin-top: 7px;
