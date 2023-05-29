@@ -135,7 +135,6 @@
   color: #342802;
   align-items: center;
   justify-content: space-between;
-  margin-left: 30px;
   
 }
 
@@ -271,23 +270,9 @@
     padding: 5px;
 }
 /* Notification */
-.badge {
-  position: absolute;
-  top: 5px;
-  left: 5px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background-color: rgb(147, 6, 6);
-  color: #fff;
-  font-size: 12px;
-  font-weight: bold;
-}
+
 .notif-container{
-  margin-top: 20px;
+  margin: 20px 10px 5px 10px;
 }
 #notifications {
   margin-top: 25px;
@@ -295,5 +280,11 @@
 }
 .notification.read {
   color: rgb(189, 187, 187);
+}
+#notif-content {
+  border: 1px solid rgb(255, 232, 209, 0.3);
+  padding: 7px 5px 5px 2px;
+  border-radius: 5px;
+  margin-top: 7px;
 }
 

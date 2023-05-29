@@ -364,12 +364,43 @@ app.get('/notifications', async (req, res) => {
     if (rating) {
       notifications.push({
         type: 'rating',
-        title: 'You received a new reply: ',
+        title: 'You received a new replay: ',
         reply: rating.reply
       });
     }
 
     res.json({ success: true, notifications });
+  } catch (err) {
+    console.error(err);
+    res.json({ success: false, message: err.message });
+  }
+});
+
+
+// Mark a notification as read
+app.post('/notifications/:notificationIndex/markAsRead', async (req, res) => {
+  const { notificationId } = req.params;
+  try {
+    // Find the notification with the specified ID
+    const notification = await Notification.findById(notificationId).exec();
+
+    if (!notification) {
+      res.status(404).json({ success: false, message: 'Notification not found' });
+      return;
+    }
+
+    // Update the corresponding question or rating object to mark it as read
+    if (notification.type === 'question') {
+      await Question.updateOne({ answer: notification.answer }, { $set: { read: true } });
+    } else if (notification.type === 'rating') {
+      await Rating.updateOne({ reply: notification.reply }, { $set: { read: true } });
+    }
+
+    // Update the notification object to mark it as read
+    notification.read = true;
+    await notification.save();
+
+    res.json({ success: true });
   } catch (err) {
     console.error(err);
     res.json({ success: false, message: err.message });

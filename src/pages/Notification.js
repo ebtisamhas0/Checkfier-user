@@ -18,9 +18,16 @@ export function Notification() {
   useEffect(() => {
     const storedNotifications = JSON.parse(localStorage.getItem('notifications'));
     if (storedNotifications && storedNotifications.length > 0) {
-      setNotifications(storedNotifications);
+      // Initialize the read status of each notification
+      const readStatus = JSON.parse(localStorage.getItem('notificationReadStatus')) || {};
+      const updatedNotifications = storedNotifications.map(notification => {
+        const isRead = readStatus[notification.id] || false;
+        return { ...notification, read: isRead };
+      });
+      setNotifications(updatedNotifications);
+  
       // Update the count of unread notifications
-      const updatedUnreadCount = storedNotifications.filter(notification => !notification.read).length;
+      const updatedUnreadCount = updatedNotifications.filter(notification => !notification.read).length;
       setUnreadCount(updatedUnreadCount);
       localStorage.setItem('unreadNotificationsCount', updatedUnreadCount);
     } else {
@@ -30,33 +37,49 @@ export function Notification() {
           if (data.success) {
             const notifications = data.notifications;
             setNotifications(notifications);
+  
+            // Initialize the read status of each notification
+            const readStatus = {};
+            notifications.forEach(notification => {
+              readStatus[notification.id] = notification.read || false;
+            });
+            localStorage.setItem('notificationReadStatus', JSON.stringify(readStatus));
+  
             // Update the count of unread notifications
             const updatedUnreadCount = notifications.filter(notification => !notification.read).length;
             setUnreadCount(updatedUnreadCount);
             localStorage.setItem('unreadNotificationsCount', updatedUnreadCount);
-            localStorage.setItem('notifications', JSON.stringify(notifications)); // Store the notifications array in local storage
-          } else {
-            console.log(`Error: ${data.message}`);
+  
+            // Store the notifications array and read status in local storage
+            localStorage.setItem('notifications', JSON.stringify(notifications));
+            localStorage.setItem('notificationReadStatus', JSON.stringify(readStatus));
           }
         })
         .catch(error => console.error('Error fetching notifications:', error));
     }
-  }, [userPhone]); 
-
+  }, [userPhone]);
+  
+  
   const handleNotificationClick = (notification) => {
     if (!notification.read) {
       // Mark the notification as read
       notification.read = true;
       const updatedNotifications = [...notifications];
       setNotifications(updatedNotifications);
-
+  
       // Update the count of unread notifications
       const updatedUnreadCount = unreadCount - 1;
       setUnreadCount(updatedUnreadCount);
       localStorage.setItem('unreadNotificationsCount', updatedUnreadCount);
+  
+      // Store the read status of the notification in local storage
+      const updatedReadStatus = { ...JSON.parse(localStorage.getItem('notificationReadStatus')) };
+      updatedReadStatus[notification.id] = true;
+      localStorage.setItem('notificationReadStatus', JSON.stringify(updatedReadStatus));
     }
   };
-
+  
+  
   return (
     <div className="Container" style={{backgroundColor:store.color}}>
       <div className='notif-container'>
@@ -69,7 +92,6 @@ export function Notification() {
                   <div id='notif-content'>
                     <h5>{notification.title} {notification.type === 'question' ? notification.answer : notification.reply}</h5>
                   </div>
-                  <hr/>
                 </div>
               ))}
             </div>

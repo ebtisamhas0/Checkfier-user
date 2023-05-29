@@ -10,6 +10,7 @@ const questionSchema = new mongoose.Schema({
     required: true
   },
   answer: [String],
+  read: { type: Boolean, default: false },
   answered: {
     type: Boolean,
     default: false
