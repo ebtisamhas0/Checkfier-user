@@ -27,3 +27,4 @@ questionSchema.methods.updateAnswers = async function(answers) {
 };
   // Define a model 
   module.exports = mongoose.model('question', questionSchema, 'questions');
+  
