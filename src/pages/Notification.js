@@ -60,6 +60,7 @@ export function Notification() {
   }, [userPhone]);
   
   
+  
   const handleNotificationClick = (notification) => {
     if (!notification.read) {
       // Mark the notification as read

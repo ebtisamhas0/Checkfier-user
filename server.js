@@ -408,6 +408,7 @@ app.post('/notifications/:notificationIndex/markAsRead', async (req, res) => {
 });
 
 
+
  
 app.use(express.static(path.join(__dirname, 'build'), {
   setHeaders: (res, path) => {
