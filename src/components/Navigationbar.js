@@ -32,6 +32,7 @@ const badgeStyle = {
   right: isRtl ? 'auto' : '5px',
 };
 
+
 return (
   <Navbar collapseOnSelect expand="sm" bg="" variant="light">
     <Navbar.Toggle
