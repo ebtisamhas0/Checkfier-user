@@ -16,32 +16,38 @@ export function Login() {
   const { login } = useContext(UserContext);
   const { language } = useLanguage();
   const translations = loginTranslations[language];
-
+  const storeName = `${store.name}`
 
   const handleOnNavigate = () => navigate('/Rewards1');
-  const handleSignup = () => navigate('/');
+  const handleSignup = () => navigate('/Signup');
 
   const handleLogin = async (event) => {
     event.preventDefault();
     setError(null);
     try {
-      const response = await fetch(`${serverUrl}/login`, {
+      const response = await fetch(`${serverUrl}/login/${storeName}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ phone }),
       });
-      const { phone: userPhone, points } = await response.json();
-      alert(`${translations.loginSuccess} ${userPhone}, ${translations.yourPointsIs}: ${points}`);
-      login(userPhone, points);
-      // Set cookie with user's phone number and points
-      const expirationTime = new Date(Date.now() + 2 * 60 * 60 * 1000); // current time + 2 hours in milliseconds
-      document.cookie = `phone=${userPhone}; points=${points}; expires=${expirationTime.toUTCString()}`;
-      handleOnNavigate();
+      const data = await response.json();
+      if (response.ok) {
+        const { phone: userPhone, points } = data;
+        alert(`${translations.loginSuccess} ${userPhone}, ${translations.yourPointsIs}: ${points}`);
+        login(userPhone, points);
+        // Set cookie with user's phone number and points
+        const expirationTime = new Date(Date.now() + 2 * 60 * 60 * 1000); // current time + 2 hours in milliseconds
+        document.cookie = `phone=${userPhone}; points=${points}; expires=${expirationTime.toUTCString()}`;
+        handleOnNavigate();
+      } else {
+        setError(data.error);
+      }
     } catch (error) {
       console.error(error);
       setError(`${translations.errorOccurred} ${error}`);
     }
   };
+  
 
   if (!store.logo || !store.name) {
     return <p>{translations.loading}</p>;

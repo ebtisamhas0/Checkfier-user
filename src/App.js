@@ -32,7 +32,8 @@ function App() {
          <Navigationbar/>
         
         <Routes>
-          <Route path='/' Component={Signup}/>
+          <Route path="/store/:storeName" Component={Signup}/>
+          <Route path="/Signup" Component={Signup}/>
           <Route path='/Rewards1' Component={Rewards1}/>
           <Route path='/Rewards2' Component={Rewards2}/>
           <Route path='/Rewards3' Component={Rewards3}/>
@@ -43,6 +44,8 @@ function App() {
           <Route path='/Login' Component={Login}/>
           <Route path='/Notification' Component={Notification}/>
           <Route path="/redeem/:code" element={<Redeem />} />
+
+
 
 
         </Routes>

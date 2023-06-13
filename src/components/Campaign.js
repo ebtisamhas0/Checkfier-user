@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Buffer } from 'buffer';
 import Carousel from 'react-bootstrap/Carousel';
 import { serverUrl } from '../config';
+import { useStore } from '../components/StoreContext';
 
 export function Campaign() {
     const [campaignImage, setCampaignImage] = useState('');
     const [state, setState] = useState('');
-
+    const { store } = useStore();
+    const storeName = store.name;
 
   useEffect(() => {
-    fetch(`${serverUrl}/campaign/latest`)
+    fetch(`${serverUrl}/campaign/${storeName}`)
     .then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');

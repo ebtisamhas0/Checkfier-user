@@ -8,6 +8,8 @@ import {Campaign} from '../components/Campaign';
 import { LanguageContext } from '../components/LanguageContext';
 import rewardsTranslations from '../translations/rewards';
 import { serverUrl } from '../config';
+import Cookies from 'js-cookie';
+
 
 export function Rewards3() {
     const navigate = useNavigate()
@@ -17,17 +19,20 @@ export function Rewards3() {
     const [rewards, setRewards] = useState([]);
     const { language } = useContext(LanguageContext);
     const translations = rewardsTranslations[language];
-
+    
     async function redeemReward(code, redemptionPoints) {
       try {
-       
+        const storeId = Cookies.get('storeId');
+    
         // Redeem reward from the server
         console.log(`Redeeming reward with code=${code}, points=${points}, redemptionPoints=${redemptionPoints}...`);
         const response = await fetch(`${serverUrl}/redeem?phone=${userPhone}&redemptionPoints=${redemptionPoints}`, {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Cookie': `storeId=${storeId}`
           },
+          credentials: 'include',
           body: JSON.stringify({
             code: code,
             points: points
@@ -35,9 +40,6 @@ export function Rewards3() {
         });
         const data = await response.json();
         console.log('Redemption Data:', data);
-    
-        // Update the points in the context
-        setPoints(data.user.points);
       } catch (err) {
         console.error(err);
       }
@@ -49,11 +51,18 @@ export function Rewards3() {
 
 
     async function fetchRewards(userPoints) {
+
       try {
+        const storeId = Cookies.get('storeId');
+
         // Fetch rewards from the server with points greater than or equal to the user's points
         console.log(`Fetching rewards from server with userPoints=${userPoints}...`);
-        const response = await fetch(`${serverUrl}/rewards?userPoints=${userPoints}`);
-        const rewardsData = await response.json();
+        const response = await fetch(`${serverUrl}/rewards?userPoints=${userPoints}`, {
+        headers: {
+          'Cookie': `storeId=${storeId}`
+        },
+        credentials: 'include'
+      });        const rewardsData = await response.json();
         console.log('Rewards Data:', rewardsData);
     
         // Update the state with the rewards data
@@ -74,7 +83,7 @@ return(
     <div className='main-content '>
         <div className='points d-flex mt-3 p-2'>
             <img src={require("../images/coin.png")}height='20vh'></img>
-            <h5 style={{marginLeft: 3}}>{ points } {translations.point}</h5>
+            <h5 style={{marginLeft: 3,color:store.color}}>{ points } {translations.point}</h5>
         </div>
 
         <div className='wallet'style={{opacity:0.7}}>
@@ -87,7 +96,7 @@ return(
         </div>
         </div>
         <div className="redeems-container">
-  {rewards.length === 0 && <p style={{ fontSize: 20, marginTop: 15 }}>{translations.noReward}</p>}
+  {rewards.length === 0 && <p style={{ fontSize: 23, marginTop: 55 }}>{translations.noReward}</p>}
   {rewards.length > 0 && (
     <React.Fragment>
       {rewards.map((reward, index) => {

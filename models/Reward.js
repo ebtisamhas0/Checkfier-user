@@ -21,7 +21,9 @@ const rewardSchema = new mongoose.Schema({
     code: {
         type: String,
         required: true,
-      }
+      },
+      store: { type: mongoose.Schema.Types.ObjectId, ref: 'store' }
+
   },{collection: 'rewards'}
   );
   

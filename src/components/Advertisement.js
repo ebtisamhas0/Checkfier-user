@@ -2,15 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { Buffer } from 'buffer';
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import { serverUrl } from '../config';
+import { useStore } from '../components/StoreContext';
 
 export function Advertisement() {
 
     const [adData, setAdData] = useState(null);
     const [error, setError] = useState(null);
     const [showAd, setShowAd] = useState(true);
-    
+    const { store } = useStore();
+    const storeName = store.name;
+
     useEffect(() => {
-      fetch(`${serverUrl}/ad`)
+      fetch(`${serverUrl}/ad/${storeName}`)
         .then(response => {
           if (!response.ok) {
             throw new Error('Network response was not ok');

@@ -13,6 +13,7 @@ export function Signup() {
   const { store } = useStore();
   const { translations, language } = useContext(LanguageContext);
   const signupTranslationsData = signupTranslations[language];
+  const storeName = `${store.name}`
 
   const navigate = useNavigate();
   const handleOnNavigate = () => navigate("/Rewards1");
@@ -23,7 +24,7 @@ export function Signup() {
     setError(null);
 
     try {
-      const response = await fetch(`${serverUrl}/register`, {
+      const response = await fetch(`${serverUrl}/register/${storeName}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -43,6 +44,8 @@ export function Signup() {
       setError(signupTranslationsData.errorOccurred);
     }
   };
+  
+
 
   return (
     <div className="Container" style={{ backgroundColor: store.color }}>

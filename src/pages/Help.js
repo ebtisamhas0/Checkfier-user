@@ -5,6 +5,7 @@ import { UserContext } from '../components/UserContext';
 import { AiOutlineRight } from "react-icons/ai";
 import { LanguageContext } from '../components/LanguageContext';
 import helpTranslations from '../translations/help';
+import { serverUrl } from '../config';
 
 export function Help() {
   const { store } = useStore();
@@ -21,9 +22,9 @@ export function Help() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const currentDate = new Date().toISOString().slice(0, 10);
-  
+    const storeName = `${store.name}`;
     try {
-      const response = await fetch('http://localhost:3000/questions', {
+      const response = await fetch(`${serverUrl}/questions/${storeName}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

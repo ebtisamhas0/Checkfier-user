@@ -6,6 +6,7 @@ const ratingSchema = new mongoose.Schema({
     phone: Number,
     date: String,
     reply: String,
+    store: { type: mongoose.Schema.Types.ObjectId, ref: 'store' },
     read: { type: Boolean, default: false }
 
     

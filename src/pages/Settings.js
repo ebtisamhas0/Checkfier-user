@@ -42,29 +42,29 @@ export function Settings() {
       <hr style={{ width: '90%' }} />
       <div className='settings-main'>
         <div className='section d-flex'>
-          <AiOutlineInfoCircle style={{ marginTop: 8 }} />
-          <h4 style={{ marginTop: 8 }}>{translations.about}</h4>
-          <AiOutlineRight onClick={handleAboutNavigate} style={{ marginTop: 8 }} />
+          <AiOutlineInfoCircle style={{ marginTop: 8,color:store.color }} />
+          <h4 style={{ marginTop: 8 ,color:store.color}}>{translations.about}</h4>
+          <AiOutlineRight onClick={handleAboutNavigate} style={{ marginTop: 8,color:store.color }} />
         </div>
         <div className='section d-flex'>
-          <AiOutlineQuestionCircle style={{ marginTop: 8 }} />
-          <h4 style={{ marginTop: 8 }}>{translations.helpCentre}</h4>
-          <AiOutlineRight onClick={handleHelpNavigate} style={{ marginTop: 8 }} />
+          <AiOutlineQuestionCircle style={{ marginTop: 8,color:store.color }} />
+          <h4 style={{ marginTop: 8,color:store.color }}>{translations.helpCentre}</h4>
+          <AiOutlineRight onClick={handleHelpNavigate} style={{ marginTop: 8,color:store.color }} />
         </div>
 
         <div className='section d-flex'>
-          <FaGratipay style={{ marginTop: 8 }} />
-          <h4 style={{ marginTop: 8 }}>{translations.rating}</h4>
+          <FaGratipay style={{ marginTop: 8,color:store.color }} />
+          <h4 style={{ marginTop: 8 ,color:store.color}}>{translations.rating}</h4>
           <AiOutlineRight 
             onClick={() => setShowRateUsPopup(true)}
-            style={{ marginTop: 8 }}
+            style={{ marginTop: 8,color:store.color }}
           />
           {showRateUsPopup && <RateUsPopup isOpen={true} onClose={() => setShowRateUsPopup(false)} onSubmit={handleRateUsPopupSubmit} initialPhone={userPhone} />}
         </div>
 
         <div className='section-phone  d-flex'>
-          <AiOutlinePhone style={{ marginTop: 8 }} />
-          <h4 className='phone-num' style={{ marginTop: 8 }}>{translations.phone} {userPhone}</h4>
+          <AiOutlinePhone style={{ marginTop: 8,color:store.color }} />
+          <h4 className='phone-num' style={{ marginTop: 8 ,color:store.color}}>{translations.phone} {userPhone}</h4>
           <label ></label>
         </div>
           <button style={{ opacity: 0.7, backgroundColor: 'rgba(0,0,0,0.0)', border: 'none', color: '#FFFCF1',fontSize:22 }}onClick={handleChangeNavigate} >{translations.Changephone}</button>

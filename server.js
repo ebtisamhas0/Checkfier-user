@@ -4,11 +4,8 @@ const bodyParser = require('body-parser');
 var cors = require("cors");
 const mongoose = require('mongoose');
 const path = require('path');
-const fs = require('fs');
 const port = process.env.PORT || 3000
-const sharp = require('sharp');
 const cookieParser = require('cookie-parser');
-const http = require('http');
 
 
 const mongURL = "mongodb+srv://admin:bK9oZDsnBMNuGf91@checkfier.bywera9.mongodb.net/?retryWrites=true&w=majority";
@@ -40,6 +37,12 @@ app.use(express.json());
 app.use(cors());
 app.use(cookieParser());
 
+const corsOptions = {
+  origin: true,
+  credentials: true,
+};
+
+app.options('*', cors(corsOptions));
 
 
 
@@ -55,6 +58,32 @@ mongoose.connect(mongURL,{
     console.log("error", err)
  })
 
+ // Get store data
+app.get('/store/:storeName', cors(), (req, res) => {
+  const storeName = req.params.storeName;
+  // Fetch data for the specified store from the database
+  Store.findOne({ name: storeName })
+    .then((store) => {
+      if (!store) {
+        res.status(404).send('No data found');
+      } else {
+        const logoData = store.logo;
+        const base64Data = Buffer.from(logoData, 'base64').toString('base64');
+        // Set the store ID in a cookie
+        res.cookie('storeId', store._id);
+        // Return the data as JSON with the logo image data as a base64-encoded string
+        const data = { logo: base64Data, name: store.name, color: store.color, storeId: store._id };
+        res.json(data);
+      }
+    })
+    .catch((error) => {
+      console.error('Error fetching store data:', error);
+      res.status(500).send('Internal server error', error);
+    });
+});
+
+
+
  app.post('/update', cors(),(req,res)=>{
     User.findByIdAndUpdate(req.body.id,{
         phone:(JSON.stringify(req.body.phone))
@@ -65,19 +94,31 @@ mongoose.connect(mongURL,{
         console.log('error',err)
     })
  })
+
  // register api
- app.post('/register', async (req, res) => {
+ app.post('/register/:storeName', async (req, res) => {
   const { phone } = req.body;
 
+  const storeName = req.params.storeName;
+
+  // Find store by name
+  const store = await Store.findOne({ name: storeName });
+  if (!store) {
+    return res.status(401).json({ error: 'Store not found' });
+  }
+
   // Check if user already exists
-  const existingUser = await User.findOne({phone});
+  const existingUser = await User.findOne({
+    phone,
+    store: store._id
+  }).populate('store');
   console.log(existingUser);
   if (existingUser) {
     return res.status(400).json({ error: 'User already exists' });
   }
 
   // Create new user
-  const user = new User({phone});
+  const user = new User({phone, store: store._id});
   await user.save();
 
   // Set cookie with user's phone and points
@@ -91,19 +132,30 @@ mongoose.connect(mongURL,{
   return res.json(user);
 });
 
-// login
-app.post('/login', async (req, res) => {
-  const { phone } = req.body;
 
-  // Authenticate user
-  const user = await User.findOne({ phone });
+// login
+app.post('/login/:storeName', async (req, res) => {
+  const { phone } = req.body;
+  const storeName = req.params.storeName;
+
+  // Find store by name
+  const store = await Store.findOne({ name: storeName });
+  if (!store) {
+    return res.status(401).json({ error: 'Store not found' });
+  }
+
+  // Find user by phone number and store ID
+  const user = await User.findOne({
+    phone,
+    store: store._id
+  }).populate('store');
 
   if (!user) {
     return res.status(401).json({ error: 'User not found' });
   }
 
   // Update user's points
-  user.points +=5;
+  user.points += 5;
   await user.save();
 
   // Set cookie with user's phone and points
@@ -139,52 +191,49 @@ app.post('/login', async (req, res) => {
   });
   
   
-  // Get store data
-  app.get('/store', cors(), (req, res) => {
-    // Fetch last data from the database
-    Store.findOne().sort({ _id: -1 }).exec()
-      .then((store) => {
-        if (!store) {
-          res.status(404).send('No data found');
-        } else {
-          const logoData = store.logo;
-          const base64Data = Buffer.from(logoData, 'base64').toString('base64');
-          // Return the data as JSON with the logo image data as a base64-encoded string
-          const data = { logo: base64Data, name: store.name, color: store.color };
-          res.json(data);
-        }
-      })
-      .catch((error) => {
-        console.error('Error fetching store data:', error);
-        res.status(500).send('Internal server error', error);
-      });
-  });
-
-
+ 
+  
 // Get advertisement data
-app.get('/ad', cors(),function(req, res) {
-  Ad.findOne().sort({ _id: -1 }).exec()
-    .then(ad => {
-      if (!ad) {
-        res.sendStatus(404);
-      } else {
-        const adData = {
-          link: ad.link,
-          image: ad.image.toString('base64') // encode image data as base64
-        };
-        res.json(adData);
-      }
-    })
-    .catch(err => {
-      console.error(err);
-      res.sendStatus(500);
-    });
+app.get('/ad/:storeName', cors(), async (req, res) => {
+  const storeName = req.params.storeName;
+
+  // Find store by name
+  const store = await Store.findOne({ name: storeName });
+  if (!store) {
+    return res.status(401).json({ error: 'Store not found' });
+  }
+  try {
+    // Find the latest ad for the store with matching ID in cookies
+    const ad = await Ad.findOne({ store: store._id }).sort({ _id: -1 }).exec();
+    if (!ad) {
+      return res.status(404).send('Ads data not found');
+
+    } else {
+      const adData = {
+        link: ad.link,
+        image: ad.image.toString('base64') // encode image data as base64
+      };
+      return res.json(adData);
+    }
+  } catch (err) {
+    console.error(err);
+    return res.sendStatus(500);
+  }
 });
 
+
 // Get campaign data
-app.get('/campaign/latest', cors(), async function(req, res) {
+app.get('/campaign/:storeName', async function(req, res) {
+  const storeName = req.params.storeName;
+
+  // Find store by name
+  const store = await Store.findOne({ name: storeName });
+  if (!store) {
+    return res.status(401).json({ error: 'Store not found' });
+  }
+
   try {
-    const campaign = await Campaign.findOne({}, { type: 1, link: 1, image: 1, imageType: 1 })
+    const campaign = await Campaign.findOne({store: store._id}, { type: 1, link: 1, image: 1, imageType: 1 })
       .sort({ _id: -1 })
       .limit(1)
       .exec();
@@ -216,20 +265,39 @@ app.get('/campaign/latest', cors(), async function(req, res) {
 
 
 // Get rewards data
-app.get('/rewards', async (req, res) => {
-  try {
-    // Get user's points
-    const userPoints = req.query.userPoints;
-    console.log(userPoints);
-    // Retrieve rewards that have points greater than or equal to user's points
-    const rewards = await Reward.find({ points: { $lte: userPoints } });
+app.get('/rewards',cors(corsOptions), async (req, res) => {
 
-    // Return rewards
-    res.status(200).json(rewards);
+  // Get the store ID from cookies
+  const storeId = req.cookies.storeId;
+  console.log('store name is:',storeId)
+
+  try {
+    // Find store by ID
+    const store = await Store.findOne({ _id: storeId});
+    if (!store) {
+      return res.status(404).json({ error: 'Store is not found'});
+    }
+   
+    // Find rewards for the store with matching ID and user points
+    const userPoints = parseInt(req.query.userPoints);
+    if (isNaN(userPoints)) {
+      return res.status(400).json({ error: 'Invalid user points' });
+    }
+
+    const rewards = await Reward.find({
+      store: store._id,
+      points: { $lte: userPoints },
+    });
+
+    // Return rewards data
+    return res.json(rewards);
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error(err);
+    return res.sendStatus(500);
   }
 });
+
+
 
 // Redeem a reward
 
@@ -273,19 +341,29 @@ app.post('/redeem', async (req, res) => {
 });
 
 
+
 // POST /rate endpoint
 
-app.post('/rate', async (req, res) => {
-  const { rating, comment, phone, date, reply, points } = req.body;
+app.post('/rate/:storeName', async (req, res) => {
+  const { rating, comment, phone, date, reply} = req.body;
+  const storeName = req.params.storeName;
+
   console.log('Rating:', rating);
   console.log('Comment:', comment);
 
-  const newRating = new Rating({ rating, comment, phone, date, reply });
-  await newRating.save();
-
   try {
+    // Fetch the store from the database
+    const store = await Store.findOne({ name: storeName });
+    if (!store) {
+      return res.status(404).json({ error: 'Store not found' });
+    }
+
+    // Create a new rating with a reference to the store
+    const newRating = new Rating({ rating, comment, phone, date, reply, store: store._id });
+    await newRating.save();
+
     // Add 15 points to the user's current points
-    const user = await User.findOneAndUpdate({ phone: phone }, { $inc: { points: 15 } }, { new: true });
+    const user = await User.findOneAndUpdate({ phone: phone, store: store._id }, { $inc: { points: 15 } }, { new: true });
     console.log(`Added 15 points to user ${user.phone}. New points total: ${user.points}`);
 
     // Create a notification for the question
@@ -294,8 +372,9 @@ app.post('/rate', async (req, res) => {
       content: {
         rating: rating,
         phone: phone,
-        comment: comment
-      }
+        comment: comment,
+        store: store._id
+      },
     });
     await newNotification.save();
 
@@ -306,17 +385,27 @@ app.post('/rate', async (req, res) => {
   }
 });
 
+
 // Handle /questions endpointapp.post('/rate', (req, res) => {
   
 
-app.post('/questions', async (req, res) => {
+app.post('/questions/:storeName', async (req, res) => {
   const { question, userPhone, date } = req.body;
+  const storeName = req.params.storeName;
+
+
   console.log('Question:', question);
   console.log('userPhone:', userPhone);
 
   try {
+
+    // Fetch the store from the database
+    const store = await Store.findOne({ name: storeName });
+    if (!store) {
+      return res.status(404).json({ error: 'Store not found' });
+    }
     // Save the question
-    const newQuestion = new Question({ question, userPhone, date });
+    const newQuestion = new Question({ question, userPhone, date, store: store._id });
     await newQuestion.save();
 
     // Create a notification for the question
@@ -326,8 +415,10 @@ app.post('/questions', async (req, res) => {
         questionId: newQuestion._id,
         question: question,
         userPhone: userPhone,
-        date: date
-      }
+        date: date,
+        store: store._id
+      },
+
     });
     await newNotification.save();
 
@@ -375,8 +466,6 @@ app.get('/notifications', async (req, res) => {
     res.json({ success: false, message: err.message });
   }
 });
-
-
 
 
 

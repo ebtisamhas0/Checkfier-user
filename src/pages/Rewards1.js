@@ -28,7 +28,7 @@ return (
         <h2>{translations.with} {store.name} {translations.reward}</h2>
         <BsArrowRight onClick={handleOnNavigate}/>
         <img  className='coin-img' src={require('../images/coin.png')}height='60vh'></img>
-
+        <h1>{store._id}</h1> 
     </div>
 )
   

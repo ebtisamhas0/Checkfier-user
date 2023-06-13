@@ -27,9 +27,9 @@ export function RateUsPopup({ isOpen, onClose, onSubmit, initialPhone }) {
 
   const handleRateUsPopupSubmit = (event) => {
     event.preventDefault(); // prevent the default form submission behavior
-
+    const storeName = `${store.name}`;
     const currentDate = new Date().toISOString().slice(0, 10);
-    fetch(`${serverUrl}/rate`, {
+    fetch(`${serverUrl}/rate/${storeName}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -53,6 +53,7 @@ export function RateUsPopup({ isOpen, onClose, onSubmit, initialPhone }) {
       console.error('Error submitting rating data:', error);
     });
   };
+  
 
 
   

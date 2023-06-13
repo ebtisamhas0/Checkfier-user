@@ -7,6 +7,7 @@ import { Campaign } from '../components/Campaign';
 import { LanguageContext } from '../components/LanguageContext';
 import rewardsTranslations from '../translations/rewards';
 import { serverUrl } from '../config';
+import Cookies from 'js-cookie';
 
 export function Rewards2() {
   const navigate = useNavigate()
@@ -17,28 +18,37 @@ export function Rewards2() {
   const [rewards, setRewards] = useState([]);
   const { language } = useContext(LanguageContext);
   const translations = rewardsTranslations[language];
+  // Get the store ID from the cookie
 
-
-
-      async function fetchRewards(userPoints) {
-      try {
-        // Fetch rewards from the server with points greater than or equal to the user's points
-        console.log(`Fetching rewards from server with userPoints=${userPoints}...`);
-        const response = await fetch(`${serverUrl}/rewards?userPoints=${userPoints}`);
-        const rewardsData = await response.json();
-        console.log('Rewards Data:', rewardsData);
-    
-        // Update the state with the rewards data
-        setRewards(rewardsData);
-      } catch (err) {
-        console.error(err);
-      }
+  async function fetchRewards(userPoints) {
+    try {
+      // Get the store ID from cookies
+      const storeId = Cookies.get('storeId');
+  
+      // Fetch rewards from the server with points greater than or equal to the user's points
+      console.log(`Fetching rewards from server with userPoints=${userPoints}...`);
+      const response = await fetch(`${serverUrl}/rewards?userPoints=${userPoints}`, {
+        headers: {
+          'Cookie': `storeId=${storeId}`
+        },
+        credentials: 'include'
+      });
+      const rewardsData = await response.json();
+  
+      console.log('Rewards Data:', rewardsData);
+      // Update the state with the rewards data
+      setRewards(rewardsData);
+    } catch (err) {
+      console.error(err);
     }
-   
-    // Call the fetchRewards function with the user's points value as a parameter
-    useEffect(() => {
-      fetchRewards(points);
-    }, [points]);
+  }
+  
+  
+  // Call the fetchRewards function with the user's points value as a parameter
+  useEffect(() => {
+    fetchRewards(points);
+  }, [points]);
+  
 
    
 
@@ -49,7 +59,7 @@ return(
       <div className='points d-flex mt-3 p-2'>
           <img src={require("../images/coin.png")}height='20vh'></img>
         
-          <h5 style={{marginLeft: 3}} >{points} {translations.point}</h5>
+          <h5 style={{marginLeft: 3, color:store.color}} >{points} {translations.point}</h5>
       </div>
 
       <div className='wallet'>
@@ -63,7 +73,7 @@ return(
         </div>
 
         <div className="rewards-container">
-  {rewards.length === 0 && <p style={{ fontSize: 20, marginTop: 15 }}>{translations.noReward}</p>}
+  {rewards.length === 0 && <p style={{ fontSize: 23, marginTop: 55 }}>{translations.noReward}</p>}
   {rewards.length > 0 && (
     <React.Fragment>
       {rewards.map((reward, index) => {
