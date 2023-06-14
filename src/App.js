@@ -32,7 +32,7 @@ function App() {
          <Navigationbar/>
         
         <Routes>
-          <Route path="/:storeName" Component={Signup}/>
+          <Route path="/store/:storeName" Component={Signup}/>
           <Route path="/Signup" Component={Signup}/>
           <Route path='/Rewards1' Component={Rewards1}/>
           <Route path='/Rewards2' Component={Rewards2}/>
