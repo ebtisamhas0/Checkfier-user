@@ -22,9 +22,9 @@ export function Help() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const currentDate = new Date().toISOString().slice(0, 10);
-    const storeName = `${store.name}`;
+
     try {
-      const response = await fetch(`${serverUrl}/questions/${storeName}`, {
+      const response = await fetch(`${serverUrl}/questions`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -32,7 +32,8 @@ export function Help() {
         body: JSON.stringify({
           question,
           userPhone,
-          date: currentDate
+          date: currentDate,
+          store: store.id
         })
       });
   
@@ -68,6 +69,7 @@ export function Help() {
     <div className="Container" style={{backgroundColor:store.color}}>
       <div className="help-main">
         <h2>{translations.title}</h2>
+
         <div className="questions-container">
           <h5 onClick={togglePopup} >{translations.gettingStarted}<AiOutlineRight style={{fontSize:15}}/></h5> 
           <h5 onClick={secondPopup}>{translations.createAccount}<AiOutlineRight style={{fontSize:15}}/> </h5> 

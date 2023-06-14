@@ -27,9 +27,8 @@ export function RateUsPopup({ isOpen, onClose, onSubmit, initialPhone }) {
 
   const handleRateUsPopupSubmit = (event) => {
     event.preventDefault(); // prevent the default form submission behavior
-    const storeName = `${store.name}`;
     const currentDate = new Date().toISOString().slice(0, 10);
-    fetch(`${serverUrl}/rate/${storeName}`, {
+    fetch(`${serverUrl}/rate`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -39,6 +38,7 @@ export function RateUsPopup({ isOpen, onClose, onSubmit, initialPhone }) {
         comment: comment,
         phone: userPhone ,
         date: currentDate, 
+        store: store.id
       })
     })
     .then(response => response.json())
@@ -79,7 +79,6 @@ export function RateUsPopup({ isOpen, onClose, onSubmit, initialPhone }) {
           <div style={{ marginBottom: "20px" }}>
             <textarea value={comment} onChange={(event) => setComment(event.target.value)} style={{ width: "100%", height: "80px", padding: "10px", borderRadius: "5px", border: "1px solid #ccc" }} />
           </div>
-          
           
           <button type="submit" style={{ backgroundColor: 'rgba(0,0,0,0.0)', border: 'none', color:store.color, marginTop:35 }}>
           <BsFillArrowRightCircleFill size={30} />

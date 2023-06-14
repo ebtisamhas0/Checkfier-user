@@ -305,9 +305,16 @@ app.post('/redeem', async (req, res) => {
   try {
     // Retrieve user from database
     const phone = req.query.phone;
+    const store = req.body.store;
+
     const user = await User.findOne({ phone: phone });
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
+    }
+
+    const storeFromDB = await Store.findOne({ _id: store });
+    if (!storeFromDB) {
+      return res.status(404).json({ error: 'Store not found' });
     }
 
     // Deduct redeemed points from user's total points
@@ -317,7 +324,8 @@ app.post('/redeem', async (req, res) => {
     // Create a new Redeem record with the redeemed points and user's phone
     const redeem = await Redeem.create({
       points: redeemedPoints,
-      userPhone: phone
+      userPhone: phone,
+      store: storeFromDB._id
     });
 
     // Save updated user object to database
@@ -330,7 +338,9 @@ app.post('/redeem', async (req, res) => {
       type: 'redeem',
       content: {
         points: redeemedPoints,
-        userPhone: phone
+        userPhone: phone,
+        store: storeFromDB._id
+
       }
     });
     await newNotification.save();
@@ -344,26 +354,25 @@ app.post('/redeem', async (req, res) => {
 
 // POST /rate endpoint
 
-app.post('/rate/:storeName', async (req, res) => {
-  const { rating, comment, phone, date, reply} = req.body;
-  const storeName = req.params.storeName;
+app.post('/rate', async (req, res) => {
+  const { rating, comment, phone, date, reply, store } = req.body;
 
   console.log('Rating:', rating);
   console.log('Comment:', comment);
 
   try {
     // Fetch the store from the database
-    const store = await Store.findOne({ name: storeName });
-    if (!store) {
+    const storeFromDB = await Store.findOne({ _id: store });
+    if (!storeFromDB) {
       return res.status(404).json({ error: 'Store not found' });
     }
 
     // Create a new rating with a reference to the store
-    const newRating = new Rating({ rating, comment, phone, date, reply, store: store._id });
+    const newRating = new Rating({ rating, comment, phone, date, reply, store: storeFromDB._id });
     await newRating.save();
 
     // Add 15 points to the user's current points
-    const user = await User.findOneAndUpdate({ phone: phone, store: store._id }, { $inc: { points: 15 } }, { new: true });
+    const user = await User.findOneAndUpdate({ phone: phone, store: storeFromDB._id }, { $inc: { points: 15 } }, { new: true });
     console.log(`Added 15 points to user ${user.phone}. New points total: ${user.points}`);
 
     // Create a notification for the question
@@ -373,7 +382,7 @@ app.post('/rate/:storeName', async (req, res) => {
         rating: rating,
         phone: phone,
         comment: comment,
-        store: store._id
+        store: storeFromDB
       },
     });
     await newNotification.save();
@@ -386,12 +395,12 @@ app.post('/rate/:storeName', async (req, res) => {
 });
 
 
+
 // Handle /questions endpointapp.post('/rate', (req, res) => {
   
 
-app.post('/questions/:storeName', async (req, res) => {
-  const { question, userPhone, date } = req.body;
-  const storeName = req.params.storeName;
+app.post('/questions', async (req, res) => {
+  const { question, userPhone, date, store } = req.body;
 
 
   console.log('Question:', question);
@@ -400,12 +409,12 @@ app.post('/questions/:storeName', async (req, res) => {
   try {
 
     // Fetch the store from the database
-    const store = await Store.findOne({ name: storeName });
-    if (!store) {
+    const storeFromDB = await Store.findOne({ _id: store });
+    if (!storeFromDB) {
       return res.status(404).json({ error: 'Store not found' });
     }
     // Save the question
-    const newQuestion = new Question({ question, userPhone, date, store: store._id });
+    const newQuestion = new Question({ question, userPhone, date, store: storeFromDB._id });
     await newQuestion.save();
 
     // Create a notification for the question
@@ -416,7 +425,7 @@ app.post('/questions/:storeName', async (req, res) => {
         question: question,
         userPhone: userPhone,
         date: date,
-        store: store._id
+        store: storeFromDB._id
       },
 
     });

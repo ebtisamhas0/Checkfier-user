@@ -22,7 +22,6 @@ export function Rewards3() {
     
     async function redeemReward(code, redemptionPoints) {
       try {
-        const storeId = Cookies.get('storeId');
     
         // Redeem reward from the server
         console.log(`Redeeming reward with code=${code}, points=${points}, redemptionPoints=${redemptionPoints}...`);
@@ -30,12 +29,11 @@ export function Rewards3() {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Cookie': `storeId=${storeId}`
           },
-          credentials: 'include',
           body: JSON.stringify({
             code: code,
-            points: points
+            points: points,
+            store: store.id
           })
         });
         const data = await response.json();

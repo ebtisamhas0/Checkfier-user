@@ -43,7 +43,7 @@ return (
     />
     <Navbar.Collapse id="navbarScroll">
       <Nav>
-        <NavLink eventKey="1" as={Link} to="/Signup">
+        <NavLink eventKey="1" as={Link} to="/store/:storeName">
           {translations.signup}
         </NavLink>
         <NavLink eventKey="2" as={Link} to="/Rewards2">
