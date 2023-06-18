@@ -479,13 +479,13 @@ app.get('/notifications', async (req, res) => {
 
 
  
-app.use(express.static(path.join(__dirname, 'build'), {
-  setHeaders: (res, path) => {
-    if (path.endsWith('.css')) {
-      res.setHeader('Content-Type', 'text/css');
-    }
-  }
-}));
+// Serve static files from the 'build' directory of project
+app.use(express.static(path.join(__dirname, 'build')));
+ // Define a catch-all route to serve React app's 'index.html' file
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+
 
 
 
